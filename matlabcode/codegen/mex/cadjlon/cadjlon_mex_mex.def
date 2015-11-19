@@ -1,0 +1,8 @@
+LIBRARY cadjlon_mex.mexw64
+EXPORTS
+mexFunction
+emlrtMexFcnProperties
+cadjlon
+cadjlon_initialize
+cadjlon_terminate
+cadjlon_atexit

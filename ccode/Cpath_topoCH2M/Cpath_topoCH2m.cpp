@@ -26,7 +26,7 @@ const double PI = 3.141592653589793;
 *		orange - output ranges (nearest profiles)
 **************************************************************************************************/
 
-int Cpath_MetProfiles(path_lat, path_lon, ragnes) {
+int Cpath_MetProfiles(vector<double> path_lat, vector<double> path_lon, vector<double> ranges) {
 	ifstream fileName;
 	fileName.open("wrfout_d04)2015-07-21_12");
 

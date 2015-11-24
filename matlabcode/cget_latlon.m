@@ -19,7 +19,24 @@
 %       plat,plon       lat,lons along path
 %
 
+
 function [plat,plon]=cget_latlon(blat,blon,ranges,azm,major_axis,esquared);
+
+coder.extrinsic('keyboard');
+signS = 0;
+merid = 0;
+cosa12 = 0;
+M = 0;
+c1 = 0;
+c2 = 0;
+D = 0;
+s1 = 0;
+P = 0;
+ds = 0;
+phi2 = 0;
+de = 0;
+ss = 0;
+
 
 if nargin < 5
 % Set the parameters for the "Clark 1966" ellipsoid model

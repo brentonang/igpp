@@ -4,7 +4,7 @@
 %       function [theta]=cadjlon(theta);
 %
 
-function [theta]=cadjlon(theta);
+function [theta]=cadjlon(theta)
 
 twopi=2*pi;
 

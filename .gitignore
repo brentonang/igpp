@@ -1,3 +1,5 @@
 *.hgt
 *.ini
 *.exe
+*.DS_STORE
+*.prj

@@ -33,9 +33,10 @@ int cGetLatLon (int argc, vector<float> blat, vector<float> blon, vector<float> 
 		esquared = 0;
 	}
 
-	do {
-	 	cout << "Press the Enter Key to continue";
-	} while (std::cin.get() != '\n');
+	// do {
+	//  	cout << "Press the Enter Key to continue";
+	// } while (std::cin.get() != '\n');
+    // KEYBOARD equivalent of C++ where you can check variable values
 
 	if (azm.size() != ranges.size()) {
 		cout << "Ranges and AZM must be the same length" << endl;
@@ -58,7 +59,7 @@ int cGetLatLon (int argc, vector<float> blat, vector<float> blon, vector<float> 
 		f4 = f/4;
 	}
 
-	// al12 = cadjlon(al12); SHOULD WE USE CSETMINMAX? UPLIM? LOWLIM?
+	// al12 = cadjlon(al12); RUN FIRST IN MATLAB AND SEE WHAT VALUE IS AND CHECK AGAINST CSETMINMAX
 	for (i = 0; i < al12.size(); i ++) { 	// DOUBLE CHECK
 		sina12[i] = sin(al12[i]);
 		cosa12[i] = cos(al12[i]);			// EARLY ASSIGNMENT OF SINAL12
@@ -87,7 +88,7 @@ int cGetLatLon (int argc, vector<float> blat, vector<float> blon, vector<float> 
 		if (merid[i] == 1) {
 			sina12[i] = 0;
 			if (abs(al12[i]) < halfpi) cosa12[i] = 1;
-			else cosa12[i] = 0;
+			else cosa12[i] = -1;
 			M[i] = 0;
 		} else {
 			for (i = 0; i < sina12.size(); i++) {

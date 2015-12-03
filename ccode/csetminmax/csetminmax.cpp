@@ -3,14 +3,14 @@
 using namespace std;
 
 vector<float> adjustToLimits (vector<float>& value, float lowerlim, float upperlim, float difference) {
-	for (int i = 0; i < value.size(); i++) {
+	for (int i = 0; i < value.size(); i++) { // INSERT WHILE LOOP TO CHECK FOR VALUES GREATER THAN AZIMUTH
 		if (value[i] >= upperlim) value[i] = value[i] - difference;
 		else if (value[i] < lowerlim) value[i] = value[i] + difference;
 	}
 	return value;
 }
 
-int cSetminmax(vector<float>& value, float lowerlim, float upperlim) {
+void cSetminmax(vector<float>& value, float lowerlim, float upperlim) {
 	float difference = upperlim - lowerlim;
 	if (difference <= 0) cout << "Error: Upper limit must be higher than lower limit" << endl;
 	adjustToLimits(value, lowerlim, upperlim, difference);

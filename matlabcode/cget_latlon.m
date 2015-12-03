@@ -49,8 +49,6 @@ if major_axis == 0
    esquared   = 0;
 end
 
-keyboard
-
 %~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 % now do the stuff that used to be in .c
 

@@ -6,8 +6,8 @@
 // #include "Cpath_topoCH2m.h"
 using namespace std;
 
-const double PI = 3.141592653589793;
-// const double PI = 4*atan(1); // equates only to 3.14159
+const double pi = 3.14159;
+// const double pi = 4*atan(1); // equates only to 3.14159
 
 /****************************************************************************************************
 * Function Cpath_MetProfiles	Reads profile data along a path
@@ -30,7 +30,7 @@ int Cpath_MetProfiles(vector<double> path_lat, vector<double> path_lon, vector<d
 	ifstream fileName;
 	fileName.open("wrfout_d04)2015-07-21_12");
 
-	double deg2rad = PI/180;
+	double deg2rad = pi/180;
 	// convert to longitudes from -180 to 180 for this database
 	path_lon = Csetminmax(path_lon,-180,180);
 

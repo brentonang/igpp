@@ -1,3 +1,9 @@
+/**************************
+ * RESEARCH OPEN SOURCE CODE PERMISSIONS
+ *
+ *************************/
+
+
 #include <algorithm>
 #include <cmath>
 #include <iostream>
@@ -19,6 +25,7 @@ vector<float> elementWiseMult (vector<float> input, float value) {
 	return input;
 }
 
+// blat and blon are single valued variables not vector or array
 vector<float> cGetLatLon (int argc, vector<float> blat, vector<float> blon, vector<float> ranges, vector<float> azm, float major_axis, float esquared) {
 	float ellipse, onef, f, f4;
 	int i, j, len = ranges.size();
@@ -27,12 +34,12 @@ vector<float> cGetLatLon (int argc, vector<float> blat, vector<float> blon, vect
 	// if (argc < 5) {
 	// 	major_axis =  6378206.4;
 	// 	esquared = 0.006768658;  
-	// }
+	// } OPTION TO PUT IN ELLIPSOID
 
 	if (major_axis == 0) {
 		major_axis = 6378206.4;
 		esquared = 0;
-	}
+	} // OPTION TO PUT IN CIRCLE
 
 	// do {
 	//  	cout << "Press the Enter Key to continue";
@@ -176,11 +183,10 @@ vector<float> cGetLatLon (int argc, vector<float> blat, vector<float> blon, vect
 			al21[j] = atan(M[j]/al21[j]);
 			if (al21[j] > 0) al21[j] += pi;
 			if (al21[j] < 0) al21[j] -= pi;
-			// al21[j] = cadjlon(al21[j]);
+			// al21[j] = cadjlon(al21[j]); // -pi to pi
 			denom[j] = (ellipse == 1) ? onef * M[j] : M[j];
 			phi2[j] = atan(-(sinth1[j] * cosds[j] + N[j] * sinds[j]) * sin(al21[j])/denom[j]);
-			// de[j] = atan2(sinds[j] * sina12[j], ...
-			// 	(costh1[j] * cosds[j] - sinth1[j] * sinds[j] * cosa12[j]);
+			de[j] = atan2(sinds[j] * sina12[j], (costh1[j] * cosds[j] - sinth1[j] * sinds[j] * cosa12[j]);
 			if (ellipse == 1) {
 				if (signS[j] == 1) de[j] = de[j] + c1[j] * ((1 - c2[j]) * ds[j] + c2[j] * sinds[j] * cos(ss[j]));
 				else de[j] = de[j] - c1[j] * ((1 - c2[j]) * ds[j] - c2[j] * sinds[j] * cos(ss[j]));

@@ -1,8 +1,0 @@
-LIBRARY Csetminmax_mex.mexw64
-EXPORTS
-mexFunction
-emlrtMexFcnProperties
-Csetminmax
-Csetminmax_initialize
-Csetminmax_terminate
-Csetminmax_atexit

@@ -1,7 +1,0 @@
-Csetminmax_mex.mexw64
-Csetminmax		Csetminmax
-Csetminmax_atexit		Csetminmax_atexit
-Csetminmax_initialize		Csetminmax_initialize
-Csetminmax_terminate		Csetminmax_terminate
-emlrtMexFcnProperties		emlrtMexFcnProperties
-mexFunction		mexFunction

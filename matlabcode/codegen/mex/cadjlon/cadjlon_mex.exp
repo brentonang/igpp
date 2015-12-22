@@ -1,7 +1,0 @@
-cadjlon_mex.mexw64
-cadjlon		cadjlon
-cadjlon_atexit		cadjlon_atexit
-cadjlon_initialize		cadjlon_initialize
-cadjlon_terminate		cadjlon_terminate
-emlrtMexFcnProperties		emlrtMexFcnProperties
-mexFunction		mexFunction

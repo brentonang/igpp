@@ -1,5 +1,7 @@
-#include <iostream>
 #include "csetminmax.hpp"
+
+#include <iostream>
+
 using namespace std;
 
 vector<double> adjustToLimits(vector<double> value, double lowerlim, double upperlim, double difference) {

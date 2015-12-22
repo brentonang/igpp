@@ -1,11 +1,9 @@
-#include "matplotlibcpp.h"
 #include "csetminmax.hpp"
 #include "cget_latlon.hpp"
 #include "CompareTopo_AlongPath.hpp"
 
 #include <algorithm>
 #include <cmath>
-#include <fstream>
 #include <iostream>
 #include <stdlib.h>
 #include <vector>
@@ -16,7 +14,7 @@ using namespace std;
 int main(int argc, char* argv[]) {
     int i = 0, j = 0;
     double azimuth, maxrange, max_range, range, rinc, scalar1, scalar2, srclat, srclon;
-    vector<double> flatlat, flatlon, plat, plon, ranges, vector1, vector2;
+    vector<double> flatlat, flatlon, plat, plon, ranges, tempRanges, vector1, vector2;
     pair<vector<double>, vector<double>> tempValues;
 
     if(argc != 7) {
@@ -43,7 +41,8 @@ int main(int argc, char* argv[]) {
     }
 
     vector<double> azm(ranges.size(), 1 * azimuth);
-    tempValues = cGetLatLon(srclat, srclon, ranges/1852, azm);
+    tempRanges = elementWiseDivision(ranges, 1852);
+    tempValues = cGetLatLon(srclat, srclon, tempRanges, azm, 6378206.4, 0.006768658);
     plat = tempValues.first;
     plon = tempValues.second;
     plon = cSetMinMax(plon, 0, 360);
@@ -60,16 +59,7 @@ int main(int argc, char* argv[]) {
     }
     flatlat = elementWiseMultiplication(vector2, scalar2);
 
-    ofstream myFile;
-    myFile.open("values.txt");
-    myFile << "The values for plat are: " << endl;
-    for (vector<double>::iterator it = plat.begin(); it != plat.end(); it++) {
-        myFile << *it << endl;
-    }
-    myFile << "The values for plon are: " << endl;
-    for (vector<double>::iterator it = plon.begin(); it != plon.end(); it++) {
-        myFile << *it << endl;
-    }
+
 
     return 0;
 }

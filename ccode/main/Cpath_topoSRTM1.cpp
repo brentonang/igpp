@@ -15,7 +15,7 @@ vector<double> returnMin(vector<double> firstVector, double secondValue) {
     return returnVector;
 }
 
-vector<double> Cpath_topoSRTM1(vector<double> path_lat, vector<double> path_lon) {
+tuple<vector<double>, vector<double>, vector<double>> Cpath_topoSRTM1(vector<double> path_lat, vector<double> path_lon) {
     int i;
     double db_res, hdb_res, nbyters_per_lon;
     vector<double> glon, glat, ilat, ilon, ilatplus1, ilonplus1, offset, olon, olat, minLat, minLon;
@@ -27,7 +27,7 @@ vector<double> Cpath_topoSRTM1(vector<double> path_lat, vector<double> path_lon)
     hdb_res = db_res/2;
     nbyters_per_lon = 2.0 * db_size[0];
 
-    path_lon = Csetminmax(path_lon, 0, 360);
+    path_lon = cSetMinMax(path_lon, 0, 360);
     for (i = 0; i < path_lon.size(); i++) {
         ilat[i] = round((path_lat[i] - db_loc[0])/db_res);
         ilon[i] = round((path_lon[i] - db_loc[2])/db_res);
@@ -37,8 +37,14 @@ vector<double> Cpath_topoSRTM1(vector<double> path_lat, vector<double> path_lon)
     ifstream file("N39W113_4X3.hgt", std::ios::in|std::ios::binary);
     if(!file) {
         cout << "Error opening file" << endl;
-        vector<double> zeros(path_lat.size());
-        return zeros;
+        vector<double> zeros1(path_lat.size());
+        vector<double> zeros2(path_lat.size());
+        vector<double> zeros3(path_lat.size());
+        tuple<vector<double>, vector<double>, vector<double>> zeroTuple;
+        std::get<0>(zeroTuple) = zeros1;
+        std::get<1>(zeroTuple) = zeros2;
+        std::get<2>(zeroTuple) = zeros3;
+        return zeroTuple;
     }
     vector<double> path_data(path_lon.size());
     for (i = 0; i < path_lon.size(); i++) {
@@ -57,10 +63,8 @@ vector<double> Cpath_topoSRTM1(vector<double> path_lat, vector<double> path_lon)
         for (int m = 0; m < minLon.size(); m++) olon[m] = glon[minLon[m]] - hdb_res;
         for (int n = 0; n < minLat.size(); n++) olat[n] = glat[minLat[n]] + hdb_res;
     }
-    returnTuple(path_data, olat, olon);
+    std::get<0>(returnTuple) = path_data;
+    std::get<1>(returnTuple) = olat;
+    std::get<2>(returnTuple) = olon;
     return returnTuple;
-}
-
-int main() {
-    return 0;
 }

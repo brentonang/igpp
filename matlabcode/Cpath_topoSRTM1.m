@@ -15,8 +15,8 @@ function  [path_data,olat,olon] = Cpath_topoSRTM1(path_lat,path_lon);
 
 rad2deg=180/pi; deg2rad=pi/180;
 % databases directory location changed from global to local variable
-DatabasesDir = '/Users/cdh/Catherine/CH2MHill/topography';
-fname = [DatabasesDir '/N39W113_4X3.hgt'];
+DatabasesDir = 'C:\Users\Brenton\Downloads\Google Drive\Miscellaneous\IGPP';
+fname = [DatabasesDir '\N39W113_4X3.hgt'];
 % 
 % NOTE: the data in this file are ordered as
 % first 14401 values are from S to N along the first longitude (247E)

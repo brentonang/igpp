@@ -23,11 +23,11 @@ if azimuth < 0 | azimuth >180
 	return
 end
 azm = azimuth*ones(size(ranges));
-
 [plat,plon]=cget_latlon(srclat,srclon,ranges/1852,azm); % convert to nmi
 
 plon=Csetminmax(plon,0,360);			% convert to positive longitudes
 
+keyboard
 % do a quick comparison of path coords on geodesic surface vs. flattish Earth
 
 flatlon = srclon+sind(azimuth)*ranges/(cosd(srclat)*111111);

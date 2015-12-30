@@ -55,7 +55,7 @@ nbytes_per_lon = db_size(1)*2;	% 2-byte integers
 		status = fseek(fid, offset(i), 'bof');
 		path_data(i)=fread(fid,[1],'integer*2');
 	end
-
+keyboard
 fclose(fid);							% close the file
 
 glon = [1:db_size(2)]*db_res-hdb_res;

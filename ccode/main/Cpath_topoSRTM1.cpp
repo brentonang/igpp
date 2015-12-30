@@ -4,23 +4,27 @@
 #include <cmath>
 #include <fstream>
 #include <iostream>
-#include <tuple>
-#include <vector>
+#include <stdio.h>
+#include <stdlib.h>
 
 using namespace std;
 
-vector<double> returnMin(vector<double> firstVector, double secondValue) {
-    vector<double> returnVector;
-    for (int i = 1; i < firstVector.size(); i++) returnVector[i] = (firstVector[i] < secondValue) ? firstVector[i] : secondValue;
+vector<int> returnMin(vector<int> firstVector, int secondValue) {
+    vector<int> returnVector;
+    for (int i = 0; i < firstVector.size(); i++) returnVector[i] = (firstVector[i] < secondValue) ? firstVector[i] : secondValue;
     return returnVector;
 }
 
 tuple<vector<double>, vector<double>, vector<double>> Cpath_topoSRTM1(vector<double> path_lat, vector<double> path_lon) {
-    int i;
+    char* buffer;
+    FILE *pFile;
+    int i, status;
+    long fileSize;
     double db_res, hdb_res, nbyters_per_lon;
-    vector<double> glon, glat, ilat, ilon, ilatplus1, ilonplus1, offset, olon, olat, minLat, minLon;
-    vector<double> db_loc{39, 43, 247, 250};
-    vector<double> db_size{14401, 10801};
+    vector<double> glon, glat, olon, olat;
+    vector<int> ilat, ilon, ilatplus1, ilonplus1, minLat, minLon, offset;
+    vector<int> db_loc{39, 43, 247, 250};
+    vector<int> db_size{14401, 10801};
     tuple<vector<double>, vector<double>, vector<double>> returnTuple;
 
     db_res = 1/3600;
@@ -34,8 +38,8 @@ tuple<vector<double>, vector<double>, vector<double>> Cpath_topoSRTM1(vector<dou
         offset[i] = ilon[i] * nbyters_per_lon + ilat[i] * 2;
     }
 
-    ifstream file("N39W113_4X3.hgt", std::ios::in|std::ios::binary);
-    if(!file) {
+    pFile = fopen("N39W113_4X3.hgt", "rb");
+    if(pFile == NULL) {
         cout << "Error opening file" << endl;
         vector<double> zeros1(path_lat.size());
         vector<double> zeros2(path_lat.size());
@@ -47,15 +51,19 @@ tuple<vector<double>, vector<double>, vector<double>> Cpath_topoSRTM1(vector<dou
         return zeroTuple;
     }
     vector<double> path_data(path_lon.size());
+    fileSize = ftell(pFile);
+    rewind(pFile);
+    buffer = (char*) malloc (sizeof(char)*fileSize);
     for (i = 0; i < path_lon.size(); i++) {
-        // status = fseek(fid, offset[i], 'bof'); // NEED TO FIGURE THIS OUT
-        // path_data[i] = fread(fid, [1], 'integer*2');
+        status = fseek(pFile, offset[i], SEEK_SET); // SEEK_SET == bof
+        path_data[i] = fread(buffer, sizeof(int) * 2, 1, pFile); // fread(ptr, size, count, stream)
     }
 
-    file.close();
-    for (i = 1; i <= db_size[1]; i++) {
-        glon[i] = i * db_res - hdb_res;
-        for (int j = 1; j <= db_size[1]; i++) glat[j] = 90 - j * db_res + hdb_res;
+    fclose(pFile);
+    free(buffer);
+    for (i = 0; i < db_size[1]; i++) {
+        glon[i] = (i + 1) * db_res - hdb_res;
+        for (int j = 0; j < db_size[0]; i++) glat[j] = 90 - (j + 1) * db_res + hdb_res;
         for (int k = 0; k < ilat.size(); k++) ilatplus1[k] = ilat[k] + 1;
         for (int l = 0; l < ilon.size(); l++) ilonplus1[l] = ilon[l] + 1;
         minLon = returnMin(ilonplus1, db_size[1]);
@@ -68,3 +76,13 @@ tuple<vector<double>, vector<double>, vector<double>> Cpath_topoSRTM1(vector<dou
     std::get<2>(returnTuple) = olon;
     return returnTuple;
 }
+
+// int main() {
+//     vector<double> vector1{1,2,3,4,5,6};
+//     vector<double> vector2{7,8,9,10,11,12};
+//     tuple<vector<double>, vector<double>, vector<double>> returnTuple;
+//     returnTuple = Cpath_topoSRTM1(vector1, vector2);
+//     cout << "Tuple first value: " << get<0>(returnTuple) << endl;
+//     cout << "Tuple second value: " << get<1>(returnTuple) << endl;
+//     cout << "Tuple third value: " << get<2>(returnTuple) << endl;  
+// }

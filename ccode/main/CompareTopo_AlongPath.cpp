@@ -1,11 +1,13 @@
 #include "csetminmax.hpp"
 #include "cget_latlon.hpp"
+#include "Cpath_topoSRTM1.hpp"
 #include "CompareTopo_AlongPath.hpp"
 
 #include <algorithm>
 #include <cmath>
 #include <iostream>
 #include <stdlib.h>
+#include <tuple>
 #include <vector>
 #include <utility>
 
@@ -16,17 +18,27 @@ int main(int argc, char* argv[]) {
     double azimuth, maxrange, max_range, range, rinc, scalar1, scalar2, srclat, srclon;
     vector<double> flatlat, flatlon, plat, plon, ranges, tempRanges, vector1, vector2;
     pair<vector<double>, vector<double>> tempValues;
+    tuple<vector<double>, vector<double>, vector<double>> tempTuple;
 
-    if(argc != 7) {
+    if(argc != 3) {
         cout << "Invalid number of command line arguments" << endl;
         return 0;
     } else {
-        srclat = atof(argv[1]);
-        srclon = atof(argv[2]);
-        rinc = atof(argv[3]);
-        azimuth = atof(argv[4]);
-        range = atof(argv[5]);
-        maxrange = atof(argv[6]);
+        rinc = atof(argv[1]);
+        if (rinc <= 30) {
+            cout << "rinc should be greater than 30m" << endl;
+            return -1;
+        }
+        azimuth = atof(argv[2]);
+        if (azimuth < 0 || azimuth > 360) {
+            cout << "azimuth should be between 0 and 360" << endl;
+            return -1;
+        }
+        maxrange = atof(argv[3]);
+        if (maxrange < 0 || maxrange > 150000) {
+            cout << "maxrange should be between 0m and 150000m" << endl;
+            return -1;
+        }
     }
 
     max_range = min(maxrange, range);
@@ -37,7 +49,7 @@ int main(int argc, char* argv[]) {
     
     if(azimuth < 0 || azimuth > 180) {
         cout << "ERROR: Azimuth must be eastward" << endl;
-        return 0;
+        return -1;
     }
 
     vector<double> azm(ranges.size(), 1 * azimuth);
@@ -59,7 +71,9 @@ int main(int argc, char* argv[]) {
     }
     flatlat = elementWiseMultiplication(vector2, scalar2);
 
+    returnTuple = Cpath_topoSRTM1(plat, plon);
 
+    
 
     return 0;
 }

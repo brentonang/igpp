@@ -91,7 +91,7 @@ pair<vector<double>, vector<double>> cGetLatLon(double blat, double blon, vector
 		}
 	}
 
-	for (i = 1; i < len; i++) {
+	for (i = 0; i < len; i++) {
 		if (merid[i] == 1) {
 			sina12[i] = 0;
 			cosa12[i] = (abs(al12[i]) < halfpi) ? 1 : -1;
@@ -138,7 +138,7 @@ pair<vector<double>, vector<double>> cGetLatLon(double blat, double blon, vector
 
 	for (i = 0; i < al12.size(); i++) if (abs(al12[i]) > halfpi) sinds[i] = -sinds[i];
 	for (i = 0; i < cosds.size(); i++) al21[i] = N[i] * cosds[i] - sinth1 * sinds[i];
-	for (j = 1; j < len; j++) {
+	for (j = 0; j < len; j++) {
 		if (merid[j] == 1) {
 			phi2[j] = atan(tan(halfpi + s1[j] - ds[j])/onef);
 			if (al21[j] > 0) {

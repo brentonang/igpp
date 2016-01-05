@@ -1,12 +1,14 @@
-#include<iomanip> 
-#include <cmath>
-#include <ctime>           // needed for timestamp
-#include <cstdio>          // needed for outputBinary_2d
 #include <fstream>
-using namespace std;
+#include <cmath>
+#include <cstdio>          // needed for outputBinary_2d
+#include <ctime>           // needed for timestamp
+#include <iomanip> 
+#include <stdlib.h>
 
-# include "Array_aux.hpp"
-# include "IO_utils.hpp"
+#include "Array_aux.hpp"
+#include "IO_utils.hpp"
+
+using namespace std;
 
 /*######################################################################### 
  

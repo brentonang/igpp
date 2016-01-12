@@ -24,12 +24,12 @@ void acoustic_1Dmodel(int rmax,int zmin,int zmax,float fsrc,int srcz,
 
 int main() {   
    // SET THE FOLLOWING CONSTANTS BEFORE COMPILATION 
-   const int zmax = 19000;       // maximum altitude in meters
+   const int zmax = 4000;       // maximum altitude in meters
    const int zmin = 1260;        // altitude of rigid surface in meters
    const int srcalt = 1261;		// source altitude in meters
-   const int rmax = 32000;		   // maximum range in meters
+   const int rmax = 8000;		   // maximum range in meters
    const float fsrc_max = 5.0;   // maximum source frequency
-   const float Tfin = 88.001;		// solve to time Tfin (seconds)
+   const float Tfin = 8.801;		// solve to time Tfin (seconds)
     
    // DIMENSION = the dimension of the environmental model
    //          (sound & wind speeds, density & pressure)

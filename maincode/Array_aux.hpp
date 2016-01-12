@@ -1,7 +1,10 @@
+#ifndef ARRAYAUX_H
+#define ARRAYAUX_H
+
 //####################### function prototypes   #################################
 
-void printvector(double *a,int n);          //overloaded
-void printvector(int *a,int n);
+void printvector(vector<double> a,int n);          //overloaded
+void printvector(vector<int> a,int n);
 
 /*  PURPOSE: to print out the first n vales of vector a
 
@@ -9,7 +12,7 @@ void printvector(int *a,int n);
 */
 
 //*******************************************************************************
-double vector_min(double *vector, int &imin,int i1,int i2);
+double vector_min(vector<double> vector, int &imin,int i1,int i2);
 
 /* PURPOSE: find the minimum value of a vector, between elements i1 through i2
     also returns the index at which the minimum value is found.
@@ -18,7 +21,7 @@ double vector_min(double *vector, int &imin,int i1,int i2);
  */
 
 //*******************************************************************************
-double vector_max(double *vector, int &imin,int i1,int i2);
+double vector_max(vector<double> vector, int &imin,int i1,int i2);
 
 /* PURPOSE: find the maximum value of a vector, between elements i1 through i2
  also returns the index at which the maximum value is found.
@@ -27,7 +30,7 @@ double vector_max(double *vector, int &imin,int i1,int i2);
  */
 
 //*******************************************************************************
-double ** zeros(int n,int m);                 // overloaded function
+vector<vector<double>> zeros(int n,int m);                 // overloaded function
 
 /* PURPOSE: dynamically allocates an n+1 by m+1 matrix with matrix dimensions 
     placed on the 0th row and column
@@ -38,7 +41,7 @@ double ** zeros(int n,int m);                 // overloaded function
     USAGE: double **array=zeros(NR,NZ);
 */
 //-------------------------------------------------------------------------------
-double * zeros(int n);                          // overloaded function
+vector<double> zeros(int n);                          // overloaded function
 
 /* PURPOSE: dynamically allocates an n+1 vector with the dimension n at the 
     vector[0] element. 
@@ -48,7 +51,7 @@ double * zeros(int n);                          // overloaded function
 */
 
 //*******************************************************************************
-int * izeros(int n);                          // overloaded function
+vector<int> izeros(int n);                          // overloaded function
 
 /* same as zeros(n) but for integers
  
@@ -56,14 +59,14 @@ int * izeros(int n);                          // overloaded function
  */
 
 //-------------------------------------------------------------------------------
-int ** izeros(int nx, int my);
+vector<vector<int>> izeros(int nx, int my);
 /* same as zeros(n,m) but for integers
 
  USAGE: int **array=izeros(NR,NZ);
  */
 
 //*******************************************************************************
-double ** initialize(int nx, int my,double value);      // overloaded function
+vector<vector<double>> initialize(int nx, int my,double value);      // overloaded function
 
 /* PURPOSE: dynamically allocates an n+1 by m+1 matrix with matrix dimensions 
     placed on the 0th row and column
@@ -75,7 +78,7 @@ double ** initialize(int nx, int my,double value);      // overloaded function
 */
 
 //-------------------------------------------------------------------------------
-double * initialize(int n, double value);               // overloaded function
+vector<double> initialize(int n, double value);               // overloaded function
 
 /* PURPOSE: dynamically allocates an n+1 vector with the dimension n at the 
     vector[0] element. 
@@ -86,7 +89,7 @@ double * initialize(int n, double value);               // overloaded function
 
 //*******************************************************************************
 
-int * iinitial(int n, int value);               // overloaded function
+vector<int> iinitial(int n, int value);               // overloaded function
 
 /* PURPOSE: dynamically allocates an integer n+1 vector with dimension n at the
  vector[0] element.
@@ -171,3 +174,5 @@ double ** reshape(double *c,int n,int m);
  must have n*m elements. This is not checked within the function. */
 
 double ** reshapeFill(double *c,int n,int m, int bigM);
+
+#endif

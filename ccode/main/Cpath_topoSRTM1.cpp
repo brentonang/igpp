@@ -21,8 +21,8 @@ tuple<vector<double>, vector<double>, vector<double>> Cpath_topoSRTM1(vector<dou
     int i, status;
     long fileSize;
     double db_res, hdb_res, nbyters_per_lon;
-    vector<double> glon, glat, olon, olat;
-    vector<int> ilat, ilon, ilatplus1, ilonplus1, minLat, minLon, offset;
+    vector<double> glon(10801), glat(14401), olon(1302), olat(1302);
+    vector<int> ilat(1302), ilon(1302), ilatplus1(1302), ilonplus1(1302), minLat(1302), minLon(1302), offset(1302);
     vector<int> db_loc{39, 43, 247, 250};
     vector<int> db_size{14401, 10801};
     tuple<vector<double>, vector<double>, vector<double>> returnTuple;
@@ -78,11 +78,22 @@ tuple<vector<double>, vector<double>, vector<double>> Cpath_topoSRTM1(vector<dou
 }
 
 // int main() {
-//     vector<double> vector1{1,2,3,4,5,6};
-//     vector<double> vector2{7,8,9,10,11,12};
+//     srand(time(0));
+//     int randomVariable1 = rand();
+//     int randomVariable2 = rand();
+//     vector<double> vector1(1302, randomVariable1);
+//     vector<double> vector2(1302, randomVariable2);
 //     tuple<vector<double>, vector<double>, vector<double>> returnTuple;
 //     returnTuple = Cpath_topoSRTM1(vector1, vector2);
-//     cout << "Tuple first value: " << get<0>(returnTuple) << endl;
-//     cout << "Tuple second value: " << get<1>(returnTuple) << endl;
-//     cout << "Tuple third value: " << get<2>(returnTuple) << endl;  
+//     vector<double> firstValue = std::get<0>(returnTuple);
+//     vector<double> secondValue = std::get<1>(returnTuple);
+//     vector<double> thirdValue = std::get<2>(returnTuple);
+//     cout << "The value of the first tuple is: ";
+//     for (vector<double>::iterator it = firstValue.begin(); it != firstValue.end(); it++) cout << *it << " ";
+//     cout << endl;
+//     cout << "The value of the second tuple is: ";
+//     for (vector<double>::iterator it = secondValue.begin(); it != secondValue.end(); it++) cout << *it << " ";    
+//     cout << endl;
+//     cout << "The value of the third tuple is: ";
+//     for (vector<double>::iterator it = thirdValue.begin(); it != thirdValue.end(); it++) cout << *it << " ";    
 // }

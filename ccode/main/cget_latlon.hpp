@@ -13,6 +13,6 @@ const double meritol = 1*pow(10, -10);
 
 std::vector<double> elementWiseMultiplication(std::vector<double>, double);
 std::vector<double> elementWiseDivision(std::vector<double>, double);
-std::pair<std::vector<double>, std::vector<double>> cGetLatLon(double, double, std::vector<double>, std::vector<int>, double, double);
+std::pair<std::vector<double>, std::vector<double>> cGetLatLon(double, double, std::vector<double>, std::vector<double>, double, double);
 
 #endif

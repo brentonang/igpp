@@ -16,13 +16,13 @@ using namespace std;
 int main(int argc, char* argv[]) {
     int i = 0, j = 0;
     double azimuth, maxrange, max_range, range, rinc, scalar1, scalar2, srclat, srclon;
-    vector<double> flatlat, flatlon, plat, plon, ranges, tempRanges, vector1, vector2;
+    vector<double> flatlat(1302), flatlon(1302), plat(1302), plon(1302), ranges(1302), tempRanges(1302), vector1(1302), vector2(1302);
     pair<vector<double>, vector<double>> tempValues;
-    tuple<vector<double>, vector<double>, vector<double>> tempTuple;
+    tuple<vector<double>, vector<double>, vector<double>> returnTuple;
 
-    if(argc != 3) {
+    if(argc != 4) {
         cout << "Invalid number of command line arguments" << endl;
-        return 0;
+        return -1;
     } else {
         rinc = atof(argv[1]);
         if (rinc <= 30) {
@@ -72,8 +72,6 @@ int main(int argc, char* argv[]) {
     flatlat = elementWiseMultiplication(vector2, scalar2);
 
     returnTuple = Cpath_topoSRTM1(plat, plon);
-
-    
 
     return 0;
 }

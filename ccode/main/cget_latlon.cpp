@@ -25,7 +25,7 @@ pair<vector<double>, vector<double>> cGetLatLon(double blat, double blon, vector
 	double costh1, denom, ellipse, f, f4, lam1, onef, phi1, th1, sinth1;
 	int i, j, len = ranges.size();
 	pair<vector<double>, vector<double>> returnValues;
-	vector<double> al12, al21, c1, c2, cosa12, cosds, D, d, de, ds, lam2, M, merid, N, P, phi2, plon, plat, S, s1, ss, signS, sina12, sind, sinds, u, V, X;
+	vector<double> al12(1302), al21(1302), c1(1302), c2(1302), cosa12(1302), cosds(1302), D(1302), d(1302), de(1302), ds(1302), lam2(1302), M(1302), merid(1302), N(1302), P(1302), phi2(1302), plon(1302), plat(1302), S(1302), s1(1302), ss(1302), signS(1302), sina12(1302), sind(1302), sinds(1302), u(1302), V(1302), X(1302);
 
 	if (major_axis == 0) {
 		major_axis = 6378206.4;
@@ -57,7 +57,7 @@ pair<vector<double>, vector<double>> cGetLatLon(double blat, double blon, vector
 		f4 = f/4;
 	}
 
-	al12 = cSetMinMax(al12, 180, -180);
+	al12 = cSetMinMax(al12, -180, 180);
 	for (i = 0; i < al12.size(); i ++) { 
 		sina12[i] = sin(al12[i]);
 		cosa12[i] = cos(al12[i]);			
@@ -159,7 +159,7 @@ pair<vector<double>, vector<double>> cGetLatLon(double blat, double blon, vector
 			al21[j] = atan(M[j]/al21[j]);
 			if (al21[j] > 0) al21[j] += pi;
 			if (al21[j] < 0) al21[j] -= pi;
-			al21[j] = cSetMinMax(al21[j], 180, -180);
+			al21[j] = cSetMinMax(al21[j], -180, 180);
 			denom = (ellipse == 1) ? onef * M[j] : M[j];
 			phi2[j] = atan(-(sinth1 * cosds[j] + N[j] * sinds[j]) * sin(al21[j])/denom);
 			de[j] = atan2(sinds[j] * sina12[j], costh1 * cosds[j] - sinth1 * sinds[j] * cosa12[j]);
@@ -173,7 +173,7 @@ pair<vector<double>, vector<double>> cGetLatLon(double blat, double blon, vector
 	for(i = 0; i < de.size(); i++) {
 		de[i] += lam1;
 	}
-	lam2 = cSetMinMax(de, 180, -180);
+	lam2 = cSetMinMax(de, -180, 180);
 	lam1 *= rad2deg;
 	phi1 *= rad2deg;
 	al12 = elementWiseMultiplication(al12, rad2deg);
@@ -188,27 +188,25 @@ pair<vector<double>, vector<double>> cGetLatLon(double blat, double blon, vector
 // int main() {
 // 	int i = 0, j = 0;
 // 	double max_range, srclat = 41.131, srclon = 360-112.8965, rinc = 100, azimuth = 70, range = 160000, maxrange = 130000;
-// 	vector<double> tempValues, ranges, plat, plon;
+// 	vector<double> tempValues(1302), ranges(1302), plat(1302), plon(1302); 
 // 	pair<vector<double>, vector<double>> myPair;
 // 	max_range = min(maxrange, range);
-//     while(j <= max_range + rinc) {
-//         ranges[i] += j;
-//         j += rinc;
-//     } 
+//    while(j <= max_range + rinc) {
+//       ranges[i] += j;
+//       j += rinc;
+//    } 
 
-//     vector<double> azm(ranges.size(), 1 * azimuth);
+//    vector<double> azm(ranges.size(), 1 * azimuth);
 
-//     tempValues = ranges;
+//    tempValues = ranges;
 // 	for (i = 0; i < ranges.size(); i++) {
 // 		tempValues[i] = ranges[i] / 1852;
 // 	}
 // 	myPair = cGetLatLon(srclat, srclon, tempValues, azm, 6378206.4, 0.006768658);
 // 	plat = myPair.first;
 // 	plon = myPair.second;
-// 	for(vector<double>::iterator it = plat.begin(); it != plat.end(); it++) {
-// 		cout << *it;
-// 	}
-// 	for(vector<double>::iterator it = plon.begin(); it != plon.end(); it++) {
-// 		cout << *it;
-// 	}
+// 	cout << "plat values are: ";
+// 	for(vector<double>::iterator it = plat.begin(); it != plat.end(); it++) cout << *it << " ";
+// 	cout << endl << "plon values are: ";
+// 	for(vector<double>::iterator it = plon.begin(); it != plon.end(); it++) cout << *it << " ";
 // }

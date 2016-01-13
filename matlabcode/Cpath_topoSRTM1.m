@@ -63,3 +63,5 @@ glat = 90-[1:db_size(1)]*db_res+hdb_res;
 olon=glon(min(db_size(2),ilon+1))-hdb_res;
 olat=glat(min(db_size(1),ilat+1))+hdb_res;
 
+keyboard
+

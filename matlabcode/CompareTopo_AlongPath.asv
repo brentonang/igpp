@@ -1,4 +1,4 @@
-srclat = 41.131; srclon = 360-112.8965;		% source location
+dbsrclat = 41.131; srclon = 360-112.8965;		% source location
 rinc = 100;									% range increment (m)
 azimuth = 70;								% azimuth cw from N (degrees)
 range = 160000;								% maximum range (m)

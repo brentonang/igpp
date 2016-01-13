@@ -4,4 +4,6 @@
 *.DS_STORE
 *.prj
 *.out
+*.bin
+*.txt
 *.in

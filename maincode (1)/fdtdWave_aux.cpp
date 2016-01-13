@@ -1,9 +1,11 @@
-#include<iomanip> 
 #include <cmath>
+#include <cstdio>
 #include <ctime>           // needed for timestamp
+#include <iomanip> 
+#include <stdlib.h>        // exit, EXIT_SUCCESS, EXIT_FAILURE
 
-# include "Array_aux.hpp"
-# include "fdtdWave_aux.hpp"
+#include "Array_aux.hpp"
+#include "fdtdWave_aux.hpp"
 
 /*######################################################################### 
  

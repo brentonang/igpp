@@ -1,15 +1,20 @@
+#ifndef IOUTILS_H
+#define IOUTILS_H
+
+#include <vector>
+
 //*************************************************************************
 
 // idiosyncratic input/ output - lots of overloading
 
-void outputBinary_2d(char *fname,double **data,int nt,double dx,double dt,
+void outputBinary_2d(char *fname,std::vector<std::vector<double>> data,int nt,double dx,double dt,
                      int zmin);
-void outputBinary_2d(char *fname,double **data,int nt,double dx,double dt,
+void outputBinary_2d(char *fname,std::vector<std::vector<double>> data,int nt,double dx,double dt,
                      int zmin, int iend);
-void outputBinary_2d(char *fname,double **data,int nt,double dx,double dt,
+void outputBinary_2d(char *fname,std::vector<std::vector<double>> data,int nt,double dx,double dt,
                      int zmin, int iend, int jend);
-void outputascii(char *fname,double *a);
-void outputascii(char *fname,int *a);
+void outputascii(char *fname,std::vector<double> a);
+void outputascii(char *fname,vector<int> a);
 
 //#########################################################################
 
@@ -41,4 +46,4 @@ void loadFields(double **&r, double **&rn, double **&vx, double **&vxn,
                 double **&vy, double **&vyn,int NX,int NZ,double dx,int ntload);
 //  PURPOSE: load fields needed for re-starting the FDTD code
 
-
+#endif

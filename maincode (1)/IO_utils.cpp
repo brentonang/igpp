@@ -1,12 +1,15 @@
-#include<iomanip> 
 #include <cmath>
-#include <ctime>           // needed for timestamp
 #include <cstdio>          // needed for outputBinary_2d
+#include <ctime>           // needed for timestamp
 #include <fstream>
-using namespace std;
+#include <iomanip> 
+#include <iostream>
+#include <stdlib.h>
 
-# include "Array_aux.hpp"
-# include "IO_utils.hpp"
+#include "Array_aux.hpp"
+#include "IO_utils.hpp"
+
+using namespace std;
 
 /*######################################################################### 
  
@@ -19,24 +22,22 @@ using namespace std;
 
 // the default is to output the entire file
 
-void outputBinary_2d(char *fname,double **data,int nt,double dx,double dt,int zmin)
+void outputBinary_2d(char *fname, vector<vector<double>> data, int nt, double dx, double dt, int zmin)
 {
     int nx = (int) data[0][1];
 	int mz = (int) data[0][0];
 	outputBinary_2d(fname,data,nt,dx,dt,zmin,nx,mz);
-    return;
 }
 
 //-------------- overloaded, only output a section of the file ------------
 //-------------------------------------------------------------------------
 
 
-void outputBinary_2d(char *fname,double **data,int nt,double dx,double dt,
+void outputBinary_2d(char *fname,vector<vector<double>> data,int nt,double dx,double dt,
 					 int zmin, int iend)
 {
     int mz = (int) data[0][0];
 	outputBinary_2d(fname,data,nt,dx,dt,zmin,iend,mz);
-    return;
 }
 
 //-------------- overloaded, only output a section of the file ------------
@@ -45,7 +46,7 @@ void outputBinary_2d(char *fname,double **data,int nt,double dx,double dt,
 // the default is to output the entire file
 // see http://www.cplusplus.com/reference/cstdio/
 
-void outputBinary_2d(char *fname,double **data,int nt,double dx,double dt, 
+void outputBinary_2d(char *fname,vector<vector<double>> data,int nt,double dx,double dt, 
 					 int zmin, int iend, int jend)
 {
     int i, mz;
@@ -54,9 +55,9 @@ void outputBinary_2d(char *fname,double **data,int nt,double dx,double dt,
     //  error handling
     fid=fopen(fname,"wb");
 	if (!fid) {
-        printf(" \n\n  in outputBinary_2d - FATAL ERROR!\n");
-		printf("  Unable to open the output file\n\n");
-        exit(-1);
+        cout << " " << endl << endl << "  in outputBinary_2d - FATAL ERROR!" << endl;
+        cout << "  Unable to open the output file" << endl << endl;
+        return;
 	}
     
     // the 0 elements of the data are un-used in this program so the
@@ -70,35 +71,31 @@ void outputBinary_2d(char *fname,double **data,int nt,double dx,double dt,
 	data[0][7] = double(round(jend));
     
     // write out a potion of the matrix and finish up
-    for (i=0; i<=iend; i++) fwrite(&data[i][0],sizeof(double),jend+1,fid);
+    for (i = 0; i <= iend; i++) fwrite(&data[i][0],sizeof(double),jend + 1,fid);
     fclose(fid);
-    
-    return;
 }
 
 /*#########################################################################
  /###############  outputascii - used for 1D profiles ####################*/
 
-void outputascii(char *fname,double *a)
+void outputascii(char *fname,vector<double> a)
 {
     FILE *fid;
     int n = (int)a[0];
     fid=fopen(fname,"w");
-    if (fid!=NULL) {
+    if (fid != NULL) {
 		// write out the vector
-        for (int i=1; i<=n; i++) fprintf(fid," %15.12f \n",a[i]);
+        for (int i = 1; i <= n; i++) fprintf(fid," %15.12f \n",a[i]);
         fclose(fid);
     }
     else {
-        printf("in outputascii: Unable to open the output file\n\n");
+        cout << "in outputascii: Unable to open the output file" << endl << endl;
 	}
-	
-    return;
 }
 
 //!!!!!!!!!!!!!!!!!!  overloaded function  !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
-void outputascii(char *fname,int *a)
+void outputascii(char *fname,vector<int> a)
 {
     FILE *fid;
     int n = (int)a[0];
@@ -109,9 +106,8 @@ void outputascii(char *fname,int *a)
         fclose(fid);
     }
     else {
-        printf("in outputascii: Unable to open the output file\n\n");
+        cout << "in outputascii: Unable to open the output file" << endl << endl;
     }
-    return;
 }
 
 

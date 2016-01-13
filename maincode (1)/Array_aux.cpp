@@ -1,7 +1,8 @@
-#include <iomanip> 
 #include <cmath>
-#include <ctime>           // needed for timestamp
 #include <cstdio>          
+#include <ctime>           // needed for timestamp
+#include <iomanip> 
+#include <stdlib.h>
  
 # include "Array_aux.hpp"
 

@@ -36,7 +36,7 @@ pair<vector<double>, vector<double>> Cpath_topoSRTM1(vector<double> path_lat, ve
         ilon[i] = round((path_lon[i] - db_loc[2])/db_res);
         offset[i] = ilon[i] * nbytes_per_lon + ilat[i] * 2;
     }
-
+/*
     ifstream pFile("N39W113_4X3.hgt", std::ios::in | std::ios::binary);
     if(!pFile) {
         cout << "Error opening file" << endl;
@@ -53,8 +53,8 @@ pair<vector<double>, vector<double>> Cpath_topoSRTM1(vector<double> path_lat, ve
         return returnPair;
     }
     vector<double> path_data(path_lon.size());
-    
-    unsigned char buffer[2];
+    */
+    /*unsigned char buffer[2];
     short height[SRTM_SIZE][SRTM_SIZE] = {0};
     for (i = 0; i < SRTM_SIZE; ++i) {
         for (j = 0; j < SRTM_SIZE; ++j) {
@@ -74,17 +74,18 @@ pair<vector<double>, vector<double>> Cpath_topoSRTM1(vector<double> path_lat, ve
             }
             height[i][j] = (buffer[0] << 8) | buffer[1];
         }
-    }
+    }*/
 
     // for (i = 0; i < path_lon.size(); i++) {
-    pFile.seekg(offset[i], pFile.beg); // SEEK_SET == bof
-    pFile.read( reinterpret_cast<char*>(buffer), sizeof(buffer));
-    short single_value = (buffer[0] << 8) | buffer[1];
+    //pFile.seekg(offset[i], pFile.beg); // SEEK_SET == bof // might need to divide offset by 2
+   // pFile.read( reinterpret_cast<char*>(buffer), sizeof(buffer));
+    //short single_value = (buffer[0] << 8) | buffer[1];
     //std::cout << "values at " << row << "," << col << ":" << std::endl;
     //std::cout << "  height array: " << height[row][col] << ", file: " << single_value << std::endl;
     // }
+    // fread(offset[i], 2,1,fid);
 
-    pFile.close();
+    //pFile.close();
     for (i = 0; i < db_size[1]; i++) glon[i] = (i + 1) * db_res - hdb_res;
     for (int j = 0; j < db_size[0]; j++) glat[j] = 90 - (j + 1) * db_res + hdb_res;
     for (int k = 0; k < ilat.size(); k++) ilatplus1[k] = ilat[k] + 1;

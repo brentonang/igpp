@@ -18,7 +18,7 @@ using namespace std;
 int main(int argc, char* argv[]) {
     ofstream myFile;
     int i = 0, j = 0, vector_size;
-    while (vector_size < 1302) {
+    while (vector_size < 1302) { // vector size will be floor[(max_range+rinc)/rinc]+1
         cout << "Please enter a vector size (must be at least 1302): ";
         cin >> vector_size;
         if (vector_size < 1302) cout << "Please enter a value at least 1302" << endl;

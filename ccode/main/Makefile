@@ -5,4 +5,4 @@ cget:
 	g++ -g -std=c++11 cget_latlon.cpp csetminmax.cpp -o cgetout
 
 cpath:
-	g++ -g -std=c++11 Cpath_topoSRTM1.cpp csetminmax.cpp -o cpathout
+	g++ -g -std=c++11 Cpath_topoSRTM1.cpp cget_latlon.cpp csetminmax.cpp -o cpathout

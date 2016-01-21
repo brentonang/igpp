@@ -186,33 +186,33 @@ pair<vector<double>, vector<double>> cGetLatLon(double blat, double blon, vector
 	return returnValues;
 }
 
-int main() {
-	int i = 0, j = 0;
-	ofstream myFile;
-	double max_range, srclat = 41.131, srclon = 360-112.8965, rinc = 100, azimuth = 70, range = 160000, maxrange = 130000;
-	vector<double> tempValues(1302), ranges(1302), plat(1302), plon(1302); 
-	pair<vector<double>, vector<double>> myPair;
-	max_range = min(maxrange, range);
-   while(j <= max_range + rinc) {
-      ranges[i] += j;
-      j += rinc;
-      i++;
-   } 
+// int main() {
+// 	int i = 0, j = 0;
+// 	ofstream myFile;
+// 	double max_range, srclat = 41.131, srclon = 360-112.8965, rinc = 100, azimuth = 70, range = 160000, maxrange = 130000;
+// 	vector<double> tempValues(1302), ranges(1302), plat(1302), plon(1302); 
+// 	pair<vector<double>, vector<double>> myPair;
+// 	max_range = min(maxrange, range);
+//    while(j <= max_range + rinc) {
+//       ranges[i] += j;
+//       j += rinc;
+//       i++;
+//    } 
 
-   vector<double> azm(ranges.size(), 1 * azimuth);
+//    vector<double> azm(ranges.size(), 1 * azimuth);
 
-   tempValues = ranges;
-	for (i = 0; i < ranges.size(); i++) {
-		tempValues[i] = ranges[i] / 1852;
-	}
-	myPair = cGetLatLon(srclat, srclon, tempValues, azm, 6378206.4, 0.006768658);
-	plat = myPair.first;
-	plon = myPair.second;
-	myFile.open("cgetlatlonoutput.txt");
-	myFile << "PLAT VALUES ARE: " << endl;
-	for(vector<double>::iterator it = plat.begin(); it != plat.end(); it++) myFile << *it << " ";
-	myFile << endl << endl << "PLON VALUES ARE: " << endl;
-	for(vector<double>::iterator it = plon.begin(); it != plon.end(); it++) myFile << *it << " ";
-	myFile.close();
-	return 0;
-}
+//    tempValues = ranges;
+// 	for (i = 0; i < ranges.size(); i++) {
+// 		tempValues[i] = ranges[i] / 1852;
+// 	}
+// 	myPair = cGetLatLon(srclat, srclon, tempValues, azm, 6378206.4, 0.006768658);
+// 	plat = myPair.first;
+// 	plon = myPair.second;
+// 	myFile.open("cgetlatlonoutput.txt");
+// 	myFile << "PLAT VALUES ARE: " << endl;
+// 	for(vector<double>::iterator it = plat.begin(); it != plat.end(); it++) myFile << *it << " ";
+// 	myFile << endl << endl << "PLON VALUES ARE: " << endl;
+// 	for(vector<double>::iterator it = plon.begin(); it != plon.end(); it++) myFile << *it << " ";
+// 	myFile.close();
+// 	return 0;
+// }

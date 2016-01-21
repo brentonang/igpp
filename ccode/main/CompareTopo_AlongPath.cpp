@@ -5,6 +5,8 @@
 
 #include <algorithm>
 #include <cmath>
+#include <fstream>
+#include <iomanip>
 #include <iostream>
 #include <stdlib.h>
 #include <tuple>
@@ -14,11 +16,13 @@
 using namespace std;
 
 int main(int argc, char* argv[]) {
+    ofstream myFile;
     int i = 0, j = 0;
-    double azimuth, maxrange, max_range, range, rinc, scalar1, scalar2, srclat, srclon;
-    vector<double> flatlat(1302), flatlon(1302), plat(1302), plon(1302), ranges(1302), tempRanges(1302), vector1(1302), vector2(1302);
+    double azimuth, maxrange, max_range, range = 160000, rinc, scalar1, scalar2, srclat = 41.131, srclon = 360 - 112.8965;
+    vector<double> flatlat(1302), flatlon(1302), olat(1302), olon(1302), plat(1302), plon(1302), ranges(1302), tempRanges(1302), vector1(1302), vector2(1302);
     pair<vector<double>, vector<double>> tempValues;
-    tuple<vector<double>, vector<double>, vector<double>> returnTuple;
+    // tuple<vector<double>, vector<double>, vector<double>> returnTuple;
+    pair<vector<double>, vector<double>> returnPair;
 
     if(argc != 4) {
         cout << "Invalid number of command line arguments" << endl;
@@ -45,6 +49,7 @@ int main(int argc, char* argv[]) {
     while(j <= max_range + rinc) {
         ranges[i] += j;
         j += rinc;
+        i++;
     } 
     
     if(azimuth < 0 || azimuth > 180) {
@@ -57,21 +62,23 @@ int main(int argc, char* argv[]) {
     tempValues = cGetLatLon(srclat, srclon, tempRanges, azm, 6378206.4, 0.006768658);
     plat = tempValues.first;
     plon = tempValues.second;
-    plon = cSetMinMax(plon, 0, 360);
+    for (i = 0; i < plon.size(); i++) plon[i] = cSetMinMax(plon[i], 0, 360);
+    for (i = 0; i < ranges.size(); i++) flatlon[i] = srclon + sin(azimuth * deg2rad) * ranges[i] / (cos(srclat * deg2rad) * 111111);
+    for (i = 0; i < ranges.size(); i++) flatlat[i] = srclat + cos(azimuth * deg2rad) * ranges[i] / 111111;
 
-    scalar1 = srclon + sin(azimuth * deg2rad);
-    for(i = 0; i < ranges.size(); i++) {
-        vector1[i] = ranges[i] / (cos(srclat*deg2rad) * 111111);
-    }
-    flatlon = elementWiseMultiplication(vector1, scalar1);
-
-    scalar2 = srclat + cos(azimuth * deg2rad);
-    for(i = 0; i < ranges.size(); i++) {
-        vector2[i] = ranges[i] / 111111;
-    }
-    flatlat = elementWiseMultiplication(vector2, scalar2);
-
-    returnTuple = Cpath_topoSRTM1(plat, plon);
-
+    returnPair = Cpath_topoSRTM1(plat, plon);
+    olat = returnPair.first;
+    olon = returnPair.second;
+    myFile.open("igppoutput.txt");
+    myFile << "OLAT VALUES ARE: " << "\n";
+    for(vector<double>::iterator it = olat.begin(); it != olat.end(); it++) myFile << std::setprecision(5) << *it << "\t\t";
+    myFile << "\n" << "\n" << "OLON VALUES ARE: " << "\n";
+    for(vector<double>::iterator it = olon.begin(); it != olon.end(); it++) myFile << std::setprecision(5) << *it << "\t\t";
+    myFile << "\n" << "\n" << "PLAT VALUES ARE: " << "\n";
+    for(vector<double>::iterator it = plat.begin(); it != plat.end(); it++) myFile << std::setprecision(5) << *it << "\t\t";
+    myFile << "\n" << "\n" << "PLON VALUES ARE: " << "\n";
+    for(vector<double>::iterator it = plon.begin(); it != plon.end(); it++) myFile << std::setprecision(5) << *it << "\t\t";
+    myFile.close();
+    cout << "Calculation finished. Output values are written to igppout.txt" << endl;
     return 0;
 }

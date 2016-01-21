@@ -17,12 +17,17 @@ using namespace std;
 
 int main(int argc, char* argv[]) {
     ofstream myFile;
-    int i = 0, j = 0;
+    int i = 0, j = 0, vector_size;
+    while (vector_size < 1302) {
+        cout << "Please enter a vector size (must be at least 1302): ";
+        cin >> vector_size;
+        if (vector_size < 1302) cout << "Please enter a value at least 1302" << endl;
+    }
     double azimuth, maxrange, max_range, range = 160000, rinc, scalar1, scalar2, srclat = 41.131, srclon = 360 - 112.8965;
-    vector<double> flatlat(1302), flatlon(1302), olat(1302), olon(1302), plat(1302), plon(1302), ranges(1302), tempRanges(1302), vector1(1302), vector2(1302);
+    vector<double> flatlat(vector_size), flatlon(vector_size), olat(vector_size), olon(vector_size), plat(vector_size), plon(vector_size), ranges(vector_size), tempRanges(vector_size), vector1(vector_size), vector2(vector_size);
     pair<vector<double>, vector<double>> tempValues;
-    // tuple<vector<double>, vector<double>, vector<double>> returnTuple;
     pair<vector<double>, vector<double>> returnPair;
+    // tuple<vector<double>, vector<double>, vector<double>> returnTuple;
 
     if(argc != 4) {
         cout << "Invalid number of command line arguments" << endl;
@@ -70,15 +75,15 @@ int main(int argc, char* argv[]) {
     olat = returnPair.first;
     olon = returnPair.second;
     myFile.open("igppoutput.txt");
-    myFile << "OLAT VALUES ARE: " << "\n";
+    myFile << "OLAT [" << olat.size() << "] VALUES ARE: " << "\n";
     for(vector<double>::iterator it = olat.begin(); it != olat.end(); it++) myFile << std::setprecision(5) << *it << "\t\t";
-    myFile << "\n" << "\n" << "OLON VALUES ARE: " << "\n";
+    myFile << "\n" << "\n" << "OLON [" << olon.size() << "] VALUES ARE: " << "\n";
     for(vector<double>::iterator it = olon.begin(); it != olon.end(); it++) myFile << std::setprecision(5) << *it << "\t\t";
-    myFile << "\n" << "\n" << "PLAT VALUES ARE: " << "\n";
+    myFile << "\n" << "\n" << "PLAT [" << plat.size() << "] VALUES ARE: " << "\n";
     for(vector<double>::iterator it = plat.begin(); it != plat.end(); it++) myFile << std::setprecision(5) << *it << "\t\t";
-    myFile << "\n" << "\n" << "PLON VALUES ARE: " << "\n";
+    myFile << "\n" << "\n" << "PLON [" << plon.size() << "] VALUES ARE: " << "\n";
     for(vector<double>::iterator it = plon.begin(); it != plon.end(); it++) myFile << std::setprecision(5) << *it << "\t\t";
     myFile.close();
-    cout << "Calculation finished. Output values are written to igppout.txt" << endl;
+    cout << "Calculation finished. Output values are written to igppoutput.txt" << endl;
     return 0;
 }

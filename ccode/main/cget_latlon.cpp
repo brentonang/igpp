@@ -26,7 +26,7 @@ pair<vector<double>, vector<double>> cGetLatLon(double blat, double blon, vector
 	double costh1, denom, ellipse, f, f4, lam1, onef, phi1, th1, sinth1;
 	int i, j, len = ranges.size();
 	pair<vector<double>, vector<double>> returnValues;
-	vector<double> al12(1302), al21(1302), c1(1302), c2(1302), cosa12(1302), cosds(1302), D(1302), d(1302), de(1302), ds(1302), lam2(1302), M(1302), merid(1302), N(1302), P(1302), phi2(1302), plon(1302), plat(1302), S(1302), s1(1302), ss(1302), signS(1302), sina12(1302), sind(1302), sinds(1302), u(1302), V(1302), X(1302);
+	vector<double> al12(len), al21(len), c1(len), c2(len), cosa12(len), cosds(len), D(len), d(len), de(len), ds(len), lam2(len), M(len), merid(len), N(len), P(len), phi2(len), plon(len), plat(len), S(len), s1(len), ss(len), signS(len), sina12(len), sind(len), sinds(len), u(len), V(len), X(len);
 
 	if (major_axis == 0) {
 		major_axis = 6378206.4;

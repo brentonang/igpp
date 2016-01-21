@@ -19,12 +19,12 @@ vector<int> returnMin(vector<int> firstVector, int secondValue) {
 
 // tuple<vector<double>, vector<double>, vector<double>> Cpath_topoSRTM1(vector<double> path_lat, vector<double> path_lon) {
 pair<vector<double>, vector<double>> Cpath_topoSRTM1(vector<double> path_lat, vector<double> path_lon) {
-    int i = 0, j = 0, status;
+    int i = 0, j = 0, status, len = path_lat.size();
     long fileSize;
     double nbytes_per_lon;
     vector<int> db_loc{39, 43, 247, 250}, db_size{14401, 10801};
-    vector<double> glon(db_size[1]), glat(db_size[0]), olon(1302), olat(1302);
-    vector<int> ilat(1302), ilon(1302), ilatplus1(1302), ilonplus1(1302), minLat(1302), minLon(1302), offset(1302);
+    vector<double> glon(db_size[1]), glat(db_size[0]), olon(len), olat(len);
+    vector<int> ilat(len), ilon(len), ilatplus1(len), ilonplus1(len), minLat(len), minLon(len), offset(len);
     // tuple<vector<double>, vector<double>, vector<double>> returnTuple;
     pair<vector<double>, vector<double>> returnPair;
 

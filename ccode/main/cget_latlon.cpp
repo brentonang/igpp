@@ -4,6 +4,7 @@
 #include <algorithm>
 #include <iostream>
 #include <utility>
+#include <fstream>
 
 using namespace std;
 
@@ -69,6 +70,20 @@ pair<vector<double>, vector<double>> cGetLatLon(double blat, double blon, vector
 	costh1 = cos(th1);
 	sinth1 = sin(th1);
 
+	for (i = 0; i < len; i++) {
+		if (merid[i] == 1) {
+			sina12[i] = 0;
+			cosa12[i] = (abs(al12[i]) < halfpi) ? 1 : -1;
+			M[i] = 0;
+			s1[i] = halfpi - th1;
+		} else {
+			M[i] = costh1 * sina12[i];
+			s1[i] = (abs(M[i]) >= 1) ? 0 : acos(M[i]);
+			s1[i] = sinth1/sin(s1[i]);
+			s1[i] = (abs(s1[i]) >= 1) ? 0 : acos(s1[i]);
+		}
+	}
+
 	for (i = 0; i < sina12.size(); i++) {
 		if (abs(sina12[i]) < meritol) {
 			merid[i] = 1;
@@ -84,24 +99,10 @@ pair<vector<double>, vector<double>> cGetLatLon(double blat, double blon, vector
 			merid[i] = 0;
 			if (ellipse == 1) {
 				c1[i] = f * M[i];
-				c2[i] = f4 * ((1 - M[i]) * M[i]);
+				c2[i] = f4 * (1 - M[i] * M[i]);
 				D[i] = (1 - c2[i]) * (1 - c2[i] - c1[i] * M[i]);
 				P[i] = (1 + 5 * c1[i] * M[i]) * (c2[i]/D[i]);
 			}
-		}
-	}
-
-	for (i = 0; i < len; i++) {
-		if (merid[i] == 1) {
-			sina12[i] = 0;
-			cosa12[i] = (abs(al12[i]) < halfpi) ? 1 : -1;
-			M[i] = 0;
-			s1[i] = halfpi - th1;
-		} else {
-			M[i] = costh1 * sina12[i];
-			s1[i] = (abs(M[i]) >= 1) ? 0 : acos(M[i]);
-			s1[i] = sinth1/sin(s1[i]);
-			s1[i] = (abs(s1[i]) >= 1) ? 0 : acos(s1[i]);
 		}
 	}
 
@@ -158,8 +159,8 @@ pair<vector<double>, vector<double>> cGetLatLon(double blat, double blon, vector
 		} else {
 			al21[j] = atan(M[j]/al21[j]);
 			if (al21[j] > 0) al21[j] += pi;
-			if (al21[j] < 0) al21[j] -= pi;
-			al21[j] = cSetMinMax(al21[j], -180, 180);
+			if (al12[j] < 0) al21[j] -= pi; //al12 or al21?
+			al21[j] = cSetMinMax(al21[j], -pi, pi);
 			denom = (ellipse == 1) ? onef * M[j] : M[j];
 			phi2[j] = atan(-(sinth1 * cosds[j] + N[j] * sinds[j]) * sin(al21[j])/denom);
 			de[j] = atan2(sinds[j] * sina12[j], costh1 * cosds[j] - sinth1 * sinds[j] * cosa12[j]);
@@ -173,7 +174,7 @@ pair<vector<double>, vector<double>> cGetLatLon(double blat, double blon, vector
 	for(i = 0; i < de.size(); i++) {
 		de[i] += lam1;
 	}
-	lam2 = cSetMinMax(de, -180, 180);
+	for (i = 0; i < len; i++) lam2[i] = cSetMinMax(de[i], -pi, pi);
 	lam1 *= rad2deg;
 	phi1 *= rad2deg;
 	al12 = elementWiseMultiplication(al12, rad2deg);
@@ -185,28 +186,33 @@ pair<vector<double>, vector<double>> cGetLatLon(double blat, double blon, vector
 	return returnValues;
 }
 
-// int main() {
-// 	int i = 0, j = 0;
-// 	double max_range, srclat = 41.131, srclon = 360-112.8965, rinc = 100, azimuth = 70, range = 160000, maxrange = 130000;
-// 	vector<double> tempValues(1302), ranges(1302), plat(1302), plon(1302); 
-// 	pair<vector<double>, vector<double>> myPair;
-// 	max_range = min(maxrange, range);
-//    while(j <= max_range + rinc) {
-//       ranges[i] += j;
-//       j += rinc;
-//    } 
+int main() {
+	int i = 0, j = 0;
+	ofstream myFile;
+	double max_range, srclat = 41.131, srclon = 360-112.8965, rinc = 100, azimuth = 70, range = 160000, maxrange = 130000;
+	vector<double> tempValues(1302), ranges(1302), plat(1302), plon(1302); 
+	pair<vector<double>, vector<double>> myPair;
+	max_range = min(maxrange, range);
+   while(j <= max_range + rinc) {
+      ranges[i] += j;
+      j += rinc;
+      i++;
+   } 
 
-//    vector<double> azm(ranges.size(), 1 * azimuth);
+   vector<double> azm(ranges.size(), 1 * azimuth);
 
-//    tempValues = ranges;
-// 	for (i = 0; i < ranges.size(); i++) {
-// 		tempValues[i] = ranges[i] / 1852;
-// 	}
-// 	myPair = cGetLatLon(srclat, srclon, tempValues, azm, 6378206.4, 0.006768658);
-// 	plat = myPair.first;
-// 	plon = myPair.second;
-// 	cout << "plat values are: ";
-// 	for(vector<double>::iterator it = plat.begin(); it != plat.end(); it++) cout << *it << " ";
-// 	cout << endl << "plon values are: ";
-// 	for(vector<double>::iterator it = plon.begin(); it != plon.end(); it++) cout << *it << " ";
-// }
+   tempValues = ranges;
+	for (i = 0; i < ranges.size(); i++) {
+		tempValues[i] = ranges[i] / 1852;
+	}
+	myPair = cGetLatLon(srclat, srclon, tempValues, azm, 6378206.4, 0.006768658);
+	plat = myPair.first;
+	plon = myPair.second;
+	myFile.open("cgetlatlonoutput.txt");
+	myFile << "PLAT VALUES ARE: " << endl;
+	for(vector<double>::iterator it = plat.begin(); it != plat.end(); it++) myFile << *it << " ";
+	myFile << endl << endl << "PLON VALUES ARE: " << endl;
+	for(vector<double>::iterator it = plon.begin(); it != plon.end(); it++) myFile << *it << " ";
+	myFile.close();
+	return 0;
+}

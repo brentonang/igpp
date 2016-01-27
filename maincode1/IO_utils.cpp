@@ -21,9 +21,8 @@ using namespace std;
 /##########  write Cstyle binary output - double precision   ############*/
 
 // the default is to output the entire file
-
-void outputBinary_2d(char *fname, vector<vector<double>> data, int nt, double dx, double dt, int zmin)
-{
+// void outputBinary_2d(char *fname, double **data, int nt, double dx, double dt, int zmin) {
+void outputBinary_2d(char *fname, vector<vector<double>> data, int nt, double dx, double dt, int zmin) {
     int nx = (int) data[0][1];
 	int mz = (int) data[0][0];
 	outputBinary_2d(fname,data,nt,dx,dt,zmin,nx,mz);
@@ -32,10 +31,10 @@ void outputBinary_2d(char *fname, vector<vector<double>> data, int nt, double dx
 //-------------- overloaded, only output a section of the file ------------
 //-------------------------------------------------------------------------
 
-
+// void outputBinary_2d(char *fname,double **data,int nt,double dx,double dt,
+//                     int zmin, int iend) {
 void outputBinary_2d(char *fname,vector<vector<double>> data,int nt,double dx,double dt,
-					 int zmin, int iend)
-{
+					 int zmin, int iend) {
     int mz = (int) data[0][0];
 	outputBinary_2d(fname,data,nt,dx,dt,zmin,iend,mz);
 }
@@ -45,10 +44,10 @@ void outputBinary_2d(char *fname,vector<vector<double>> data,int nt,double dx,do
 
 // the default is to output the entire file
 // see http://www.cplusplus.com/reference/cstdio/
-
+// void outputBinary_2d(char *fname,double **data,int nt,double dx,double dt, 
+//                     int zmin, int iend, int jend) {
 void outputBinary_2d(char *fname,vector<vector<double>> data,int nt,double dx,double dt, 
-					 int zmin, int iend, int jend)
-{
+					 int zmin, int iend, int jend) {
     int i, mz;
 	FILE *fid;
     
@@ -77,15 +76,15 @@ void outputBinary_2d(char *fname,vector<vector<double>> data,int nt,double dx,do
 
 /*#########################################################################
  /###############  outputascii - used for 1D profiles ####################*/
-
-void outputascii(char *fname,vector<double> a)
-{
+// void outputascii(char *fname,double *a) {
+void outputascii(char *fname,vector<double> a) {
     FILE *fid;
     int n = (int)a[0];
     fid=fopen(fname,"w");
     if (fid != NULL) {
 		// write out the vector
-        for (int i = 1; i <= n; i++) fprintf(fid," %15.12f \n",a[i]);
+        // for (int i = 1; i <= n; i++) fprintf(fid," %15.12f \n",a[i]); can also use a.size()
+        for (int i = 1; i <= a.size(); i++) fprintf(fid," %15.12f \n",a[i]);
         fclose(fid);
     }
     else {
@@ -94,15 +93,16 @@ void outputascii(char *fname,vector<double> a)
 }
 
 //!!!!!!!!!!!!!!!!!!  overloaded function  !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
-void outputascii(char *fname,vector<int> a)
-{
+// void outputascii(char *fname,int *a) {
+void outputascii(char *fname,vector<int> a) {
     FILE *fid;
-    int n = (int)a[0];
+    // int n = (int)a[0]; no need for type casting here
+    int n = a[0]
     fid=fopen(fname,"w");
     if (fid!=NULL) {
         // write out the vector
-        for (int i=1; i<=n; i++) fprintf(fid," %d \n",a[i]);
+        // for (int i=1; i<=n; i++) fprintf(fid," %d \n",a[i]); can also use a.size()
+        for (int i = 1; i <= a.size(); i++) fprintf(fid," %d \n",a[i]);
         fclose(fid);
     }
     else {
@@ -118,8 +118,8 @@ void outputascii(char *fname,vector<int> a)
 // check http://www.cplusplus.com/forum/general/30918/ for improvements
 // and look at filestreams.pdf
 
-void inputascii(char *fname,int zmax,double *&a,double *&b,int &n)
-{
+// void inputascii(char *fname,int zmax,double *&a,double *&b,int &n) {
+void inputascii(char *fname,int zmax,vector<double> &a,vector<double> &b,int &n) {
     FILE *fid;
     fid=fopen(fname,"r");
     if (!fid) {
@@ -158,10 +158,12 @@ void inputascii(char *fname,int zmax,double *&a,double *&b,int &n)
 
 /*#########################################################################
  /#######################  loadBCBFields  ################################*/
-void loadBCBFields(double **&pxbcb, double **&pxbcbn, double **&pybcb,
-                   double **&pybcbn, double **&vxbcb, double **&vxbcbn,
-                   double **&vybcb, double **&vybcbn,int iefbc,int jebc,int ntload)
-{
+// void loadBCBFields(double **&pxbcb, double **&pxbcbn, double **&pybcb,
+//                    double **&pybcbn, double **&vxbcb, double **&vxbcbn,
+//                    double **&vybcb, double **&vybcbn,int iefbc,int jebc,int ntload) {
+void loadBCBFields(vector<vector<double>> &pxbcb, vector<vector<double>> &pxbcbn, vector<vector<double>> &pybcb,
+                   vector<vector<double>> &pybcbn, vector<vector<double>> &vxbcb, vector<vector<double>> &vxbcbn,
+                   vector<vector<double>> &vybcb, vector<vector<double>> &vybcbn, int iefbc, int jebc, int ntload) {
     char infilename[80];
     int nxx, nyy;
     
@@ -209,9 +211,10 @@ void loadBCBFields(double **&pxbcb, double **&pxbcbn, double **&pybcb,
 
 /*#########################################################################
  /#######################  loadFields  ###################################*/
-void loadFields(double **&r, double **&rn, double **&vx, double **&vxn,
-                double **&vy, double **&vyn,int NX,int NZ,double dx,int ntload)
-{
+// void loadFields(double **&r, double **&rn, double **&vx, double **&vxn,
+//                 double **&vy, double **&vyn,int NX,int NZ,double dx,int ntload) {
+void loadFields(vector<vector<double>> &r, vector<vector<double>> &rn, vector<vector<double>> &vx, vector<vector<double>> &vxn,
+                vector<vector<double>> &vy, vector<vector<double>> &vyn,int NX,int NZ,double dx,int ntload) {    
     char infilename[80];
     int nxx, nyy;
     
@@ -255,12 +258,14 @@ void loadFields(double **&r, double **&rn, double **&vx, double **&vxn,
 
 /*#########################################################################
  /#######################  inputBinary2D  ################################*/
-double ** inputBinary2D(char *fname, int &dim1, int &dim2, int NZ, int NX)
-{
-    double *dumv;
+// double ** inputBinary2D(char *fname, int &dim1, int &dim2, int NZ, int NX) {
+vector<vector<double>> inputBinary2D(char *fname, int &dim1, int &dim2, int NZ, int NX) {
+    // double *dumv;
+    vector<double> dumv;
     int fileLen;
     double firstval;
-    double **array;
+    // double **array;
+    vector<vector<double>> array;
     
 //    dumv=inputBinary(fname, fileLen,firstval);
     dumv=inputBinaryOld(fname, fileLen,firstval);
@@ -306,10 +311,11 @@ double ** inputBinary2D(char *fname, int &dim1, int &dim2, int NZ, int NX)
 // & from
 //stackoverflow.com/questions/23066176/read-double-type-data-from-binary-file
 
-double * inputBinary(char *fname, int &fileLen, double &firstval)
-{
+// double * inputBinary(char *fname, int &fileLen, double &firstval) {
+vector<double> inputBinary(char *fname, int &fileLen, double &firstval) {
     char *memblock;
-    double *double_values;
+    // double *double_values;
+    vector<double> double_values;
     streampos size;
     ifstream file (fname, ios::in|ios::binary|ios::ate);
     if (file.is_open())
@@ -328,7 +334,7 @@ double * inputBinary(char *fname, int &fileLen, double &firstval)
     }
     else {
         printf("FATAL ERROR: Unable to open file in inputBinary\n\n");
-        exit(-1);
+        // exit(-1); Don't need
     }
     
     return(double_values);
@@ -337,8 +343,8 @@ double * inputBinary(char *fname, int &fileLen, double &firstval)
 /*#########################################################################
  /#######################  inputBinaryOld   ##############################*/
 
-double * inputBinaryOld(char *fname, int &fileLen, double &firstval)
-{
+// double * inputBinaryOld(char *fname, int &fileLen, double &firstval) {
+vector<double> inputBinaryOld(char *fname, int &fileLen, double &firstval) {
     struct rec
     {
         double x;

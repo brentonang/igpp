@@ -14,36 +14,36 @@ void outputBinary_2d(char *fname,std::vector<std::vector<double>> data,int nt,do
 void outputBinary_2d(char *fname,std::vector<std::vector<double>> data,int nt,double dx,double dt,
                      int zmin, int iend, int jend);
 void outputascii(char *fname,std::vector<double> a);
-void outputascii(char *fname,vector<int> a);
+void outputascii(char *fname,std::vector<int> a);
 
 //#########################################################################
 
 // inputs
 
-void inputascii(char *fname,int zmax,double *&a,double *&b,int &n);
+void inputascii(char *fname,int zmax,std::vector<double> &a,std::vector<double> &b,int &n);
 
-double * inputBinary(char *fname, int &fileLen, double &firstval);
+std::vector<double> inputBinary(char *fname, int &fileLen, double &firstval);
 /*  PURPOSE: read in binary data in double precision
  input:		fname: filename for binary data
  fileLen : length of file
  output:		double precision vector of values
  */
 
-double * inputBinaryOld(char *fname, int &fileLen, double &firstval);
+std::vector<double> inputBinaryOld(char *fname, int &fileLen, double &firstval);
 
 //**************************************************************************
 
-double ** inputBinary2D(char *fname, int &dim1, int &dim2, int NZ, int NX);
+std::vector<std::vector<double>> inputBinary2D(char *fname, int &dim1, int &dim2, int NZ, int NX);
 //  PURPOSE: reads in binary data from filename fname
 //			and loads it to a NX x NZ array
 
-void loadBCBFields(double **&pxbcb, double **&pxbcbn, double **&pybcb,
-                   double **&pybcbn, double **&vxbcb, double **&vxbcbn,
-                   double **&vybcb, double **&vybcbn,int iefbc,int jebc,int ntload);
+void loadBCBFields(std::vector<std::vector<double>> &pxbcb, std::vector<std::vector<double>> &pxbcbn, std::vector<std::vector<double>> &pybcb,
+                   std::vector<std::vector<double>> &pybcbn, std::vector<std::vector<double>> &vxbcb, std::vector<std::vector<double>> &vxbcbn,
+                   std::vector<std::vector<double>> &vybcb, std::vector<std::vector<double>> &vybcbn,int iefbc,int jebc,int ntload);
 //  PURPOSE: load back boundary fields needed for re-starting the FDTD code
 
-void loadFields(double **&r, double **&rn, double **&vx, double **&vxn,
-                double **&vy, double **&vyn,int NX,int NZ,double dx,int ntload);
+void loadFields(std::vector<std::vector<double>> &r, std::vector<std::vector<double>> &rn, std::vector<std::vector<double>> &vx, std::vector<std::vector<double>> &vxn,
+                std::vector<std::vector<double>> &vy, std::vector<std::vector<double>> &vyn,int NX,int NZ,double dx,int ntload);
 //  PURPOSE: load fields needed for re-starting the FDTD code
 
 #endif

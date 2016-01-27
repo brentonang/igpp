@@ -1,180 +1,229 @@
 #include <cmath>
 #include <cstdio>          
 #include <ctime>           // needed for timestamp
+#include <iostream>
 #include <iomanip> 
 #include <stdlib.h>
  
-# include "Array_aux.hpp"
+#include "Array_aux.hpp"
+
+using namespace std;
 
 /*###############################################################################
  
             THE FIRST SEVERAL FUNCTIONS ARE PRETTY GENERALLY USEFUL
  
 ###############################################################################*/
-void printvector(double *a,int n)
-{
-    for (int i=0; i<=n; i++) printf("%16.12f\n",a[i]);  return;
+// void printvector(double *a,int n) {
+void printvector(vector<double> a) { // is n necessary? will there be cases where not the full vector size will be printed out?
+    for (int i = 0; i <= a.size(); i++) printf("%16.12f\n",a[i]);
 }
 
 //#############################################################################*/
-void printvector(int *a,int n)
-{
-    for (int i=0; i<=n; i++) printf("%d\n",a[i]);  return;
+// void printvector(int *a,int n) {
+void printvector(vector<int> a) {
+    for (int i = 0; i <= a.size(); i++) printf("%d\n",a[i]);
 }
 
 /*###############################################################################
 /##### find the minimum value of a vector in the range i1 through i2 ##########*/
+/**********************************DEPRECATED*************************************/
+// Use std::min_element, needs #include <algorithm> e.g. 
+// vector<double> vector1 {4, 6, 8, 9, 11, 2, 66, 1000000, -2};
+// cout << "The smallest element of vector1 is " << *std::min_element(vector1.begin(), vector1.end()) << endl;
 
-double vector_min(double *vector, int &imin,int i1,int i2)
-{
-    int i; imin = i1;
-    double vecmin=vector[i1];
-    for (i=i1+1; i<=i2; i++) {
-        if (vector[i]<vecmin ) {
-            vecmin = vector[i];
-            imin =i;
-        }
-    }
-    return vecmin;
-}
+// double vector_min(double *vector, int &imin,int i1,int i2)
+// {
+//     int i; imin = i1;
+//     double vecmin=vector[i1];
+//     for (i=i1+1; i<=i2; i++) {
+//         if (vector[i]<vecmin ) {
+//             vecmin = vector[i];
+//             imin =i;
+//         }
+//     }
+//     return vecmin;
+// }
 
 /*###############################################################################
 /##### find the maximum value of a vector in the range i1 through i2 ##########*/
+/**********************************DEPRECATED*************************************/
+// Use std::max_element, needs #include <algorithm> e.g. 
+// vector<double> vector1 {4, 6, 8, 9, 11, 2, 66, 1000000, -2};
+// cout << "The largest element of vector1 is " << *std::max_element(vector1.begin(), vector1.end()) << endl;
 
-double vector_max(double *vector, int &imin,int i1,int i2)
-{
-    int i; imin = i1;
-    double vecmax=vector[i1];
-    for (i=i1+1; i<=i2; i++) {
-        if (vector[i]>vecmax ) {
-            vecmax = vector[i];
-            imin =i;
-        }
-    }
-    return vecmax;
-}
+// double vector_max(double *vector, int &imin,int i1,int i2)
+// {
+//     int i; imin = i1;
+//     double vecmax=vector[i1];
+//     for (i=i1+1; i<=i2; i++) {
+//         if (vector[i]>vecmax ) {
+//             vecmax = vector[i];
+//             imin =i;
+//         }
+//     }
+//     return vecmax;
+// }
 
 /*############################################################################### 
 /######### dynamically allocate vector & initialize to 0 - overloaded #########*/
+/***********************************DEPRECATED***********************************/
+// Initialize vector using c++11 standard
+// vector<double> vector1(n) where n = size
+// automatically initializes a vector1 of size n to 0s e.g.
+// vector<double> vector1(15) -> double vector of size 15 initialized to 0s
+// vector<double> vector1(15, 5) -> double vector of size 15 initialized to 5s
 
-double * zeros(int n)
-{
-    double *vector;
-	vector = initialize(n,0.0);
-    return (vector);
-}
+// double * zeros(int n)
+// {
+//     double *vector;
+// 	vector = initialize(n,0.0);
+//     return (vector);
+// }
 
 /*-------------------------------------------------------------------------------
 /--------- dynamically allocate array & initialize to 0 - overloaded ----------*/
+/***********************************DEPRECATED***********************************/
+// Initialize 2D vector using c++11 standard
+// vector<vector<double>> vector1(row, vector<double>(col, value)); e.g.
+// vector<vector<double>> vector1(15, vector<double>(14); -> 2D double vector 15x14 of 0s
+// vector<vector<double>> vector1(22, vector<double>(12, 3)); -> 2D double vector 22x12 of 3s
 
-double ** zeros(int nx, int my)
-{
-	double **array;
-    array = initialize(nx,my,0.0);
-	return (array);
-}
+// double ** zeros(int nx, int my)
+// {
+// 	double **array;
+//     array = initialize(nx,my,0.0);
+// 	return (array);
+// }
 
 /*############################################################################### 
 /##### dynamically allocate array & initialize to given value - overloaded ####*/
+/***********************************DEPRECATED***********************************/
+// See above function explanation
 
-double ** initialize(int nx, int my, double value)
-{
-    int i,j;
-// printf("zeros2d: Allocating %lf MB memory\n",((nx+1)*(my+1))/((double)1e6));
-// setup array
-    double **arr=new double*[nx+1];
-    for(i=0; i<=nx; ++i ) arr[i] = new double[my+1];
-    // initialize, add dimension length in 0 elements
-    for (i=1; i<=nx; i++) for (j=1; j<=my; j++) arr[i][j]=value;
-    for (i=0; i<=nx; i++) arr[i][0]=(double)my;
-    for (j=1; j<=my; j++) arr[0][j]=(double)nx;
-    return (arr);
-}
+// double ** initialize(int nx, int my, double value)
+// {
+//     int i,j;
+// // printf("zeros2d: Allocating %lf MB memory\n",((nx+1)*(my+1))/((double)1e6));
+// // setup array
+//     double **arr=new double*[nx+1];
+//     for(i=0; i<=nx; ++i ) arr[i] = new double[my+1];
+//     // initialize, add dimension length in 0 elements
+//     for (i=1; i<=nx; i++) for (j=1; j<=my; j++) arr[i][j]=value;
+//     for (i=0; i<=nx; i++) arr[i][0]=(double)my;
+//     for (j=1; j<=my; j++) arr[0][j]=(double)nx;
+//     return (arr);
+// }
  
 /*-------------------------------------------------------------------------------
 /--- dynamically allocate a vector & initialize to given value - overloaded ---*/
+/***********************************DEPRECATED***********************************/
+// See above function explanation
 
-double * initialize(int n,double value)
-{
-    double *vector=new double[n+1];
-    // initialize, add dimension length in 0 elements
-    for (int i=1; i<=n; i++) vector[i] = value;
-    vector[0]=(double)n;
-    return (vector);
-}
+// double * initialize(int n,double value)
+// {
+//     double *vector=new double[n+1];
+//     // initialize, add dimension length in 0 elements
+//     for (int i=1; i<=n; i++) vector[i] = value;
+//     vector[0]=(double)n;
+//     return (vector);
+// }
 
 /*###############################################################################
 /############# much like initialize but outputs an integer vector #############*/
+/***********************************DEPRECATED***********************************/
+// See above function explanation e.g.
+// vector<int> vector1(15, 3) -> vector of ints of size 15 of 3s
 
-int * iinitial(int n, int value)
-{
-    int *vector=new int[n+1];
-    // initialize, add dimension length in 0 element
-    for (int i=1; i<=n; i++) vector[i] = value;
-    vector[0] = n;
-    return (vector);
-}
+// int * iinitial(int n, int value)
+// {
+//     int *vector=new int[n+1];
+//     // initialize, add dimension length in 0 element
+//     for (int i=1; i<=n; i++) vector[i] = value;
+//     vector[0] = n;
+//     return (vector);
+// }
 
 /*###############################################################################
 /##### dynamically allocate integer VECTOR & initialize to 0 - overloaded #####*/
+/***********************************DEPRECATED***********************************/
+// See above function explanation e.g.
+// vector<int> vector1(15) -> vector of ints of size 15 os 0s
 
-int * izeros(int n)
-{
-    int *vector = new int[n+1];
-    for (int i=1; i<=n; i++) vector[i] = 0;
-    vector[0] = n;
-    return (vector);
-}
+// int * izeros(int n)
+// {
+//     int *vector = new int[n+1];
+//     for (int i=1; i<=n; i++) vector[i] = 0;
+//     vector[0] = n;
+//     return (vector);
+// }
 
 /*-------------------------------------------------------------------------------
 --------------- dynamically allocate integer ARRAY & initialize to 0  ---------*/
-int ** izeros(int nx, int my)
-{
-    int i,j;
-    int **arr=new int*[nx+1];
-    for(i=0; i<=nx; ++i ) arr[i] = new int[my+1];
-// initialize, add dimension length in 0 elements
-    for (i=1; i<=nx; i++) for (j=1; j<=my; j++) arr[i][j]=0;
-    for (i=0; i<=nx; i++) arr[i][0]=(double)my;
-    for (j=1; j<=my; j++) arr[0][j]=(double)nx;
-    return (arr);
-}
+/***********************************DEPRECATED***********************************/
+// See above function explanation
+
+// int ** izeros(int nx, int my)
+// {
+//     int i,j;
+//     int **arr=new int*[nx+1];
+//     for(i=0; i<=nx; ++i ) arr[i] = new int[my+1];
+// // initialize, add dimension length in 0 elements
+//     for (i=1; i<=nx; i++) for (j=1; j<=my; j++) arr[i][j]=0;
+//     for (i=0; i<=nx; i++) arr[i][0]=(double)my;
+//     for (j=1; j<=my; j++) arr[0][j]=(double)nx;
+//     return (arr);
+// }
 
 /*###############################################################################
 /######### swap vectors, dimensions must be listed in 0 rows & columns ########*/
+/***********************************DEPRECATED***********************************/
+// Use vector::swap e.g.
+// vector<vector<double>> vector1(15, vector<double>(5));
+// vector<vector<double>> vector2(2, vector<double>(2, 4));
+// vector1.swap(vector2);
 
-void swap2d(double **a, double **b)
-{
-    int n= a[0][1], m = a[1][0], i1=1, j1=1;
-    swap2d(a,b,i1,n,j1,m);
-    return;
-}
+// void swap2d(double **a, double **b)
+// {
+//     int n= a[0][1], m = a[1][0], i1=1, j1=1;
+//     swap2d(a,b,i1,n,j1,m);
+//     return;
+// }
 
 /*-------------------------------------------------------------------------------
  ------------ swap 2d vectors, section of 1st dimension & all of 2nd  ---------*/
-void swap2d(double **a, double **b, int i1, int i2)
-{
-    int j1=1, m = a[1][0]; 
-    swap2d(a,b,i1,i2,j1,m);
-    return;
-}
+/***********************************DEPRECATED***********************************/
+// Use std::swap_ranges, both vectors must have same size e.g.
+// vector<vector<double>> vector1(15, vector<double>(15,3));
+// vector<vector<double>> vector2(15, vector<double>(15));
+//swap_ranges(vector1.begin()+3, vector1.end(), vector2.begin());
+
+// void swap2d(double **a, double **b, int i1, int i2)
+// {
+//     int j1=1, m = a[1][0]; 
+//     swap2d(a,b,i1,i2,j1,m);
+//     return;
+// }
 
 /*-------------------------------------------------------------------------------
 ------------swap vectors, dimensions must be listed in 0 rows & columns -------*/
-void swap2d(double **a, double **b,int i1,int i2,int j1,int j2)
-{
-    int i,j;
-    double dum;
-    //   printf("swap2d: dimensions n = %d  m = %d\n",n,m);
-    for (i=i1; i<=i2; i++) {
-        for (j=j1; j<=j2; j++) {
-            dum=a[i][j];
-            a[i][j]=b[i][j];
-            b[i][j]=dum;
-        }
-    }
-    return;
-}
+/***********************************DEPRECATED***********************************/
+// See above function explanation
+
+// void swap2d(double **a, double **b,int i1,int i2,int j1,int j2)
+// {
+//     int i,j;
+//     double dum;
+//     //   printf("swap2d: dimensions n = %d  m = %d\n",n,m);
+//     for (i=i1; i<=i2; i++) {
+//         for (j=j1; j<=j2; j++) {
+//             dum=a[i][j];
+//             a[i][j]=b[i][j];
+//             b[i][j]=dum;
+//         }
+//     }
+//     return;
+// }
 
 /*############################################################################### 
 /######### round_to_sigdigs - rounds *DOWN* to N significant digits ###########*/

@@ -1,10 +1,13 @@
 #ifndef ARRAYAUX_H
 #define ARRAYAUX_H
 
-//####################### function prototypes   #################################
+#include <vector>
 
-void printvector(vector<double> a,int n);          //overloaded
-void printvector(vector<int> a,int n);
+//####################### function prototypes   #################################
+// void printvector(double* a, int n);
+void printvector(std::vector<double> a);          //overloaded
+// void printvector(int* a, int n);
+void printvector(std::vector<int> a);
 
 /*  PURPOSE: to print out the first n vales of vector a
 
@@ -12,7 +15,8 @@ void printvector(vector<int> a,int n);
 */
 
 //*******************************************************************************
-double vector_min(vector<double> vector, int &imin,int i1,int i2);
+/***********************************DEPRECATED***********************************/
+// double vector_min(vector<double> vector, int &imin,int i1,int i2);
 
 /* PURPOSE: find the minimum value of a vector, between elements i1 through i2
     also returns the index at which the minimum value is found.
@@ -21,7 +25,8 @@ double vector_min(vector<double> vector, int &imin,int i1,int i2);
  */
 
 //*******************************************************************************
-double vector_max(vector<double> vector, int &imin,int i1,int i2);
+/***********************************DEPRECATED***********************************/
+// double vector_max(vector<double> vector, int &imin,int i1,int i2);
 
 /* PURPOSE: find the maximum value of a vector, between elements i1 through i2
  also returns the index at which the maximum value is found.
@@ -30,7 +35,8 @@ double vector_max(vector<double> vector, int &imin,int i1,int i2);
  */
 
 //*******************************************************************************
-vector<vector<double>> zeros(int n,int m);                 // overloaded function
+/***********************************DEPRECATED***********************************/
+// vector<vector<double>> zeros(int n,int m);                 // overloaded function
 
 /* PURPOSE: dynamically allocates an n+1 by m+1 matrix with matrix dimensions 
     placed on the 0th row and column
@@ -41,7 +47,8 @@ vector<vector<double>> zeros(int n,int m);                 // overloaded functio
     USAGE: double **array=zeros(NR,NZ);
 */
 //-------------------------------------------------------------------------------
-vector<double> zeros(int n);                          // overloaded function
+/***********************************DEPRECATED***********************************/
+// vector<double> zeros(int n);                          // overloaded function
 
 /* PURPOSE: dynamically allocates an n+1 vector with the dimension n at the 
     vector[0] element. 
@@ -51,7 +58,8 @@ vector<double> zeros(int n);                          // overloaded function
 */
 
 //*******************************************************************************
-vector<int> izeros(int n);                          // overloaded function
+/***********************************DEPRECATED***********************************/
+// vector<int> izeros(int n);                          // overloaded function
 
 /* same as zeros(n) but for integers
  
@@ -59,14 +67,16 @@ vector<int> izeros(int n);                          // overloaded function
  */
 
 //-------------------------------------------------------------------------------
-vector<vector<int>> izeros(int nx, int my);
+/***********************************DEPRECATED***********************************/
+// vector<vector<int>> izeros(int nx, int my);
 /* same as zeros(n,m) but for integers
 
  USAGE: int **array=izeros(NR,NZ);
  */
 
 //*******************************************************************************
-vector<vector<double>> initialize(int nx, int my,double value);      // overloaded function
+/***********************************DEPRECATED***********************************/
+// vector<vector<double>> initialize(int nx, int my,double value);      // overloaded function
 
 /* PURPOSE: dynamically allocates an n+1 by m+1 matrix with matrix dimensions 
     placed on the 0th row and column
@@ -78,7 +88,8 @@ vector<vector<double>> initialize(int nx, int my,double value);      // overload
 */
 
 //-------------------------------------------------------------------------------
-vector<double> initialize(int n, double value);               // overloaded function
+/***********************************DEPRECATED***********************************/
+// vector<double> initialize(int n, double value);               // overloaded function
 
 /* PURPOSE: dynamically allocates an n+1 vector with the dimension n at the 
     vector[0] element. 
@@ -88,8 +99,8 @@ vector<double> initialize(int n, double value);               // overloaded func
 */
 
 //*******************************************************************************
-
-vector<int> iinitial(int n, int value);               // overloaded function
+/***********************************DEPRECATED***********************************/
+// vector<int> iinitial(int n, int value);               // overloaded function
 
 /* PURPOSE: dynamically allocates an integer n+1 vector with dimension n at the
  vector[0] element.
@@ -98,9 +109,10 @@ vector<int> iinitial(int n, int value);               // overloaded function
  USAGE: int **array = iinitial(NR,value);
  */
 //*******************************************************************************
-void swap2d(double **a, double **b);
-void swap2d(double **a, double **b, int i1, int i2);                // overloaded
-void swap2d(double **a, double **b,int i1,int i2,int j1,int j2);  // overloaded
+/***********************************DEPRECATED***********************************/
+// void swap2d(double **a, double **b);
+// void swap2d(double **a, double **b, int i1, int i2);                // overloaded
+// void swap2d(double **a, double **b,int i1,int i2,int j1,int j2);  // overloaded
 
 /* PURPOSE: swaps 2 matrices
 either

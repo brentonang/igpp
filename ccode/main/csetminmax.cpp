@@ -7,7 +7,7 @@ using namespace std;
 vector<double> adjustToLimits(vector<double> value, double lowerlim, double upperlim, double difference) {
 	for(int i = 0; i < value.size(); i++) {
 		while(value[i] >= upperlim || value[i] < lowerlim) {
-			value[i] = (value[i] >= upperlim) ? value[i] - difference : value[i] + difference;
+			value[i] = (value[i] >= upperlim) ? value[i] - 2*difference : value[i] + 2*difference;
 		}
 	}
 	return value;

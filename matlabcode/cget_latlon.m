@@ -41,7 +41,7 @@ if length(azm)~=len
    disp('RANGES and AZM must be the same length')
    return
 end
-
+keyboard
 deg2rad=pi/180;
 rad2deg=180/pi;
 halfpi=pi/2;
@@ -99,6 +99,7 @@ if ellipse ==1
       D(im1) = D(im1).*D(im1); P(im1) = c2(im1)./D(im1);
 %   else 
       c1(im0) = f*M(im0);c2(im0)= f4*(1. - M(im0).*M(im0));
+      keyboard
       D(im0) = (1.-c2(im0)).*(1.-c2(im0)-c1(im0).*M(im0));
       P(im0) = (1.+.5*c1(im0).*M(im0)).*c2(im0)./D(im0);
 %   end
@@ -177,8 +178,9 @@ for j=1:len
       end
    end
 end
+keyboard
 lam2 = cadjlon(lam1+de);
-
+keyboard
 lam1=lam1*rad2deg;
 phi1 = phi1*rad2deg;
 al12 = al12*rad2deg;

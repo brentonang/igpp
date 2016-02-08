@@ -37,6 +37,16 @@ pair<vector<double>, vector<double>> Cpath_topoSRTM1(vector<double> path_lat, ve
         offset[i] = ilon[i] * nbytes_per_lon + ilat[i] * 2;
     }
 
+    // const int row = 500;
+    // const int col = 1000;
+    // size_t offset = sizeof(buffer) * ((row * SRTM_SIZE) + col);
+    // file.seekg(offset, std::ios::beg);
+    // file.read( reinterpret_cast<char*>(buffer), sizeof(buffer) );
+    // short single_value = (buffer[0] << 8) | buffer[1];
+    // std::cout << "values at " << row << "," << col << ":" << std::endl;
+    // std::cout << "  height array: " << height[row][col] << ", file: " << single_value << std::endl;
+
+
     char* buffer;
     FILE* pFile;
     long lSize;

@@ -26,6 +26,7 @@ pair<vector<double>, vector<double>> Cpath_topoSRTM1(vector<double> path_lat, ve
    vector<double> glon(db_size[1]), glat(db_size[0]), olon(len), olat(len), path_data(path_lon.size());
    vector<int> ilat(len), ilon(len), ilatplus1(len), ilonplus1(len), minLat(len), minLon(len), offset(len);
    tuple<vector<double>, vector<double>, vector<double>> returnTuple;
+   tuple<vector<double>, vector<double>, vector<double>> zeroTuple;
    pair<vector<double>, vector<double>> returnPair;
 
    nbytes_per_lon = 2.0 * db_size[0];
@@ -37,41 +38,38 @@ pair<vector<double>, vector<double>> Cpath_topoSRTM1(vector<double> path_lat, ve
      offset[i] = ilon[i] * nbytes_per_lon + ilat[i] * 2;
    }
 
-   // ifstream file("N39W113_4X3.hgt", ios::in|ios::binary);
-   // if(!file) {
-   //   cout << "Error opening file!" << endl;
-   //   vector<double> zeros1(path_lat.size());
-   //   vector<double> zeros2(path_lat.size());
+   ifstream file("N39W113_4X3.hgt", ios::in|ios::binary);
+   if(!file) {
+     cout << "Error opening file!" << endl;
+     vector<double> zeros1(path_lat.size());
+     vector<double> zeros2(path_lat.size());
      // vector<double> zeros3(path_lat.size());
-     // tuple<vector<double>, vector<double>, vector<double>> zeroTuple;
      // std::get<0>(zeroTuple) = zeros1;
      // std::get<1>(zeroTuple) = zeros2;
      // std::get<2>(zeroTuple) = zeros3;
      // return zeroTuple;
-   //   returnPair.first = zeros1;
-   //   returnPair.second = zeros2;
-   //   return returnPair;
-   // }
+     returnPair.first = zeros1;
+     returnPair.second = zeros2;
+     return returnPair;
+   }
 
-   // for (int i = 0; i < db_size[0]; i++) {
-   //    for (int j = 0; j < db_size[1]; j++) {
-   //          if(!file.read( reinterpret_cast<char*>(buffer), sizeof(buffer) )) {
-   //              std::cout << "Error reading file!" << std::endl;
-   //              vector<double> zeros1(path_lat.size());
-   //              vector<double> zeros2(path_lat.size());
-                // vector<double> zeros3(path_lat.size());
-                // tuple<vector<double>, vector<double>, vector<double>> zeroTuple;
-                // std::get<0>(zeroTuple) = zeros1;
-                // std::get<1>(zeroTuple) = zeros2;
-                // std::get<2>(zeroTuple) = zeros3;
-                // return zeroTuple;
-   //              returnPair.first = zeros1;
-   //              returnPair.second = zeros2;
-   //              return returnPair;
-   //          }
-   //          height[i][j] = (buffer[0] << 8) | buffer[1];
-   //      }
-   // }
+   const int SRTM_VERSION = 1201;
+   int height[SRTM_VERSION][SRTM_VERSION];
+   unsigned char memblock[2];
+   for (i = 0; i < SRTM_VERSION; i++) {
+    for (j = 0; j < SRTM_VERSION; j++) {
+      height[i][j] = (memblock[0] << 8) | memblock[1];
+    }
+   }
+
+   const int row = 500;
+   const int column = 1000;
+   size_t tempoffset = sizeof(memblock) * ((row * SRTM_VERSION) + column);
+   file.seekg (tempoffset, ios::beg);
+   file.read (reinterpret_cast<char*>(memblock), sizeof(memblock));
+   short single_value = (memblock[0] << 8) | memblock[1];
+   cout << "values at " << row << ", " << col << ": " << endl;
+   cout << "  height array: " << height[row][col] << ", file: " << single_value << endl;
 
    // for(int i = 0; i < ilat.size(); i++) {
    //    for(int j = 0; j < ilon.size(); j++) {

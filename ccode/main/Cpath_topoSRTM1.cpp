@@ -19,8 +19,7 @@ vector<int> returnMin(vector<int> firstVector, int secondValue) {
 
 // tuple<vector<double>, vector<double>, vector<double>> Cpath_topoSRTM1(vector<double> path_lat, vector<double> path_lon) {
 pair<vector<double>, vector<double>> Cpath_topoSRTM1(vector<double> path_lat, vector<double> path_lon) {
-<<<<<<< HEAD
-   int i = 0, j = 0, status, len = path_lat.size();
+   int i = 0, j = 0, status, single_value, len = path_lat.size();
    long fileSize;
    double nbytes_per_lon;
    vector<int> db_loc{39, 43, 247, 250}, db_size{14401, 10801};
@@ -29,19 +28,6 @@ pair<vector<double>, vector<double>> Cpath_topoSRTM1(vector<double> path_lat, ve
    tuple<vector<double>, vector<double>, vector<double>> returnTuple;
    tuple<vector<double>, vector<double>, vector<double>> zeroTuple;
    pair<vector<double>, vector<double>> returnPair;
-=======
-	const int SRTM_SIZE = 3601;
-	// int height[SRTM_SIZE][SRTM_SIZE];
-	int i, j, status, single_value, len = path_lat.size();
-	long fileSize;
-	double nbytes_per_lon;
-	vector<int> db_loc{39, 43, 247, 250}, db_size{14401, 10801};
-	vector<double> glon(db_size[1]), glat(db_size[0]), olon(len), olat(len), path_data(path_lon.size());
-	vector<int> ilat(len), ilon(len), ilatplus1(len), ilonplus1(len), minLat(len), minLon(len), offset(len);
-	tuple<vector<double>, vector<double>, vector<double>> returnTuple;
-	tuple<vector<double>, vector<double>, vector<double>> zeroTuple;
-	pair<vector<double>, vector<double>> returnPair;
->>>>>>> 1a13c1c27a9445c80e65ea06bda7f4b8a1ba4b7a
 
 	nbytes_per_lon = 2.0 * db_size[0];
 
@@ -69,12 +55,6 @@ pair<vector<double>, vector<double>> Cpath_topoSRTM1(vector<double> path_lat, ve
 		returnPair.second = zeros2;
 		return returnPair;
 	}
-
-	// for(i = 0; i < SRTM_SIZE; i++) {
-	// 	for(j = 0; j < SRTM_SIZE; j++) {
-	// 		height[i][j] = buffer[1] | (buffer[0] << 8);
-	// 	}
-	// }
 
 	for(i = 0; i < offset.size(); i++) {
 		file.seekg(offset[i], ios::beg);
